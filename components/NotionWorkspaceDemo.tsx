@@ -441,9 +441,12 @@ export default function NotionWorkspaceDemo() {
                 <span className="inline-flex items-center whitespace-nowrap">
                   <span>{reduceMotion ? activeTitlePrefix : typedTitle}</span>
                   {!reduceMotion ? (
-                    <span aria-hidden="true" className="mx-0.5 h-4 w-px animate-pulse bg-white/60" />
+                    <span
+                      aria-hidden="true"
+                      className="typewriter-cursor mx-0.5 h-4 w-px bg-white/70"
+                    />
                   ) : null}
-                  <span className="ml-1 text-white/52">OS</span>
+                  <span>{" OS"}</span>
                 </span>
               </span>
             </div>
@@ -604,6 +607,23 @@ export default function NotionWorkspaceDemo() {
             </aside>
           </div>
         </div>
+        <style jsx>{`
+          .typewriter-cursor {
+            animation: typewriter-blink 1s steps(1, end) infinite;
+          }
+
+          @keyframes typewriter-blink {
+            0%,
+            49% {
+              opacity: 1;
+            }
+
+            50%,
+            100% {
+              opacity: 0;
+            }
+          }
+        `}</style>
       </div>
     </div>
   );

@@ -25,19 +25,16 @@ const SECONDARY_ITEMS = [
 
 const WORKSPACE_CARDS = [
   {
-    title: "Weekly launch board",
-    detail: "Owners, dates, and blockers synced in one view.",
-    tone: "bg-[#f5f2ea]",
+    title: "Product Roadmap",
+    detail: "Milestones, owners, and launch blockers aligned in one system.",
   },
   {
-    title: "Client portal",
-    detail: "Shared updates, approvals, and next actions.",
-    tone: "bg-[#eef4ff]",
+    title: "Client Portal",
+    detail: "Shared approvals, updates, and next steps synced to the workspace.",
   },
   {
-    title: "Content calendar",
-    detail: "Drafts, briefs, and assets mapped by status.",
-    tone: "bg-[#eef8f0]",
+    title: "Content Calendar",
+    detail: "Briefs, assets, and delivery dates tracked by status.",
   },
 ];
 
@@ -48,9 +45,9 @@ const DATABASE_ROWS = [
 ];
 
 const AUTOMATION_STEPS = [
-  { title: "Intake form submitted", meta: "Lead captured", status: "Done" },
-  { title: "AI brief generated", meta: "Summary + tags", status: "Running" },
-  { title: "Owner assigned", meta: "Based on template", status: "Queued" },
+  { title: "AI Brief", meta: "Summary generated from intake notes", status: "Done" },
+  { title: "Slack Update", meta: "Routing status to the delivery channel", status: "Running" },
+  { title: "Delivery Handoff", meta: "Assigning owner and final checklist", status: "Queued" },
 ];
 
 const INSIGHT_METRICS = [
@@ -70,44 +67,72 @@ function getTransition(shouldReduceMotion: boolean) {
   };
 }
 
+function getViewMeta(view: DemoView) {
+  switch (view) {
+    case "automation":
+      return {
+        title: "Automation control center",
+        detail: "Flows, safeguards, and delivery handoffs linked to the workspace.",
+        pill: "2 active flows",
+      };
+    case "insights":
+      return {
+        title: "Insights and optimization",
+        detail: "Review what the system improved and where the next gains are hiding.",
+        pill: "AI review",
+      };
+    case "workspace":
+    default:
+      return {
+        title: "Workspace command center",
+        detail: "Pages, databases, and execution notes shaped around your team.",
+        pill: "Live sync",
+      };
+  }
+}
+
+function StatusPill({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="inline-flex w-fit rounded-full border border-white/[0.12] bg-white/[0.06] px-2.5 py-1 text-[11px] font-medium text-white/58">
+      {children}
+    </span>
+  );
+}
+
 function WorkspacePanel() {
   return (
-    <div className="space-y-4">
+    <div className="space-y-3.5">
       <div className="grid gap-3 xl:grid-cols-3">
         {WORKSPACE_CARDS.map((card) => (
           <div
             key={card.title}
-            className={`rounded-[22px] border border-black/8 px-4 py-4 shadow-[0_10px_24px_rgba(0,0,0,0.04)] ${card.tone}`}
+            className="rounded-[20px] border border-white/[0.08] bg-[#151821] px-4 py-4 shadow-[0_16px_28px_rgba(0,0,0,0.18)]"
           >
-            <div className="inline-flex rounded-full border border-black/8 bg-white/75 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-black/45">
-              Page
-            </div>
-            <h3 className="mt-3 text-base font-semibold tracking-[-0.03em] text-black/85">
+            <StatusPill>Page</StatusPill>
+            <h3 className="mt-3 text-base font-semibold tracking-[-0.03em] text-white/88">
               {card.title}
             </h3>
-            <p className="mt-2 text-sm leading-6 text-black/56">{card.detail}</p>
+            <p className="mt-2 text-sm leading-6 text-white/58">{card.detail}</p>
           </div>
         ))}
       </div>
 
       <div className="grid gap-3 xl:grid-cols-[minmax(0,1fr)_220px]">
-        <div className="rounded-[24px] border border-black/8 bg-white/88 p-4 shadow-[0_12px_28px_rgba(0,0,0,0.04)]">
-          <div className="flex items-center justify-between">
+        <div className="rounded-[22px] border border-white/[0.08] bg-[#111217] p-4 shadow-[0_16px_28px_rgba(0,0,0,0.2)]">
+          <div className="flex items-center justify-between gap-3">
             <div>
-              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-black/42">
-                Content ops
+              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/35">
+                Core database
               </p>
-              <p className="mt-1 text-sm font-semibold tracking-[-0.02em] text-black/84">
-                Live database
+              <p className="mt-1 text-sm font-semibold tracking-[-0.02em] text-white/84">
+                Product ops board
               </p>
             </div>
-            <div className="rounded-full border border-black/8 bg-[#f7f7f5] px-3 py-1 text-[11px] font-medium text-black/54">
-              Synced
-            </div>
+            <StatusPill>Synced</StatusPill>
           </div>
 
-          <div className="mt-4 overflow-hidden rounded-[18px] border border-black/8">
-            <div className="grid grid-cols-[minmax(0,1.8fr)_88px_92px] border-b border-black/8 bg-[#f8f7f4] px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-black/42">
+          <div className="mt-4 overflow-hidden rounded-[18px] border border-white/[0.08] bg-[#0d0f14]">
+            <div className="grid grid-cols-[minmax(0,1.8fr)_88px_92px] border-b border-white/[0.08] bg-white/[0.04] px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/36">
               <span>Item</span>
               <span>Owner</span>
               <span>Status</span>
@@ -115,11 +140,11 @@ function WorkspacePanel() {
             {DATABASE_ROWS.map((row) => (
               <div
                 key={row.name}
-                className="grid grid-cols-[minmax(0,1.8fr)_88px_92px] items-center border-b border-black/6 px-3 py-3 last:border-b-0"
+                className="grid grid-cols-[minmax(0,1.8fr)_88px_92px] items-center border-b border-white/[0.06] px-3 py-3 last:border-b-0"
               >
-                <span className="truncate pr-3 text-sm font-medium text-black/78">{row.name}</span>
-                <span className="text-sm text-black/54">{row.owner}</span>
-                <span className="inline-flex w-fit rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[11px] font-medium text-emerald-700">
+                <span className="truncate pr-3 text-sm font-medium text-white/78">{row.name}</span>
+                <span className="text-sm text-white/48">{row.owner}</span>
+                <span className="inline-flex w-fit rounded-full border border-[#2f6fed]/40 bg-[#102033] px-2.5 py-1 text-[11px] font-medium text-[#8cb4ff]">
                   {row.status}
                 </span>
               </div>
@@ -127,20 +152,20 @@ function WorkspacePanel() {
           </div>
         </div>
 
-        <div className="rounded-[24px] border border-black/8 bg-[#faf8f4] p-4 shadow-[0_12px_28px_rgba(0,0,0,0.04)]">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-black/42">
-            Checklist
+        <div className="rounded-[22px] border border-white/[0.08] bg-[#0f1117] p-4 shadow-[0_16px_28px_rgba(0,0,0,0.2)]">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/35">
+            Action queue
           </p>
           <div className="mt-3 space-y-2.5">
             {["Planning locked", "Assets attached", "Handoff ready"].map((item) => (
               <div
                 key={item}
-                className="flex items-center gap-3 rounded-[18px] border border-black/8 bg-white px-3 py-3"
+                className="flex items-center gap-3 rounded-[16px] border border-white/[0.08] bg-white/[0.04] px-3 py-3"
               >
-                <span className="grid h-6 w-6 place-items-center rounded-full bg-black text-[10px] font-semibold uppercase text-white">
+                <span className="grid h-6 w-6 place-items-center rounded-full border border-[#2f6fed]/40 bg-[#102033] text-[10px] font-semibold uppercase text-[#9abaff]">
                   OK
                 </span>
-                <span className="text-sm font-medium text-black/72">{item}</span>
+                <span className="text-sm font-medium text-white/72">{item}</span>
               </div>
             ))}
           </div>
@@ -152,37 +177,36 @@ function WorkspacePanel() {
 
 function AutomationPanel() {
   return (
-    <div className="space-y-4">
-      <div className="rounded-[24px] border border-black/8 bg-white/90 p-4 shadow-[0_12px_28px_rgba(0,0,0,0.04)]">
-        <div className="flex items-center justify-between">
+    <div className="space-y-3.5">
+      <div className="rounded-[22px] border border-white/[0.08] bg-[#111217] p-4 shadow-[0_16px_28px_rgba(0,0,0,0.2)]">
+        <div className="flex items-center justify-between gap-3">
           <div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-black/42">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/35">
               Automation map
             </p>
-            <p className="mt-1 text-sm font-semibold tracking-[-0.02em] text-black/84">
+            <p className="mt-1 text-sm font-semibold tracking-[-0.02em] text-white/84">
               Lead intake to delivery handoff
             </p>
           </div>
-          <div className="rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-[11px] font-medium text-amber-700">
-            2 active flows
-          </div>
+          <StatusPill>System healthy</StatusPill>
         </div>
 
         <div className="mt-4 grid gap-3 xl:grid-cols-3">
           {AUTOMATION_STEPS.map((step, index) => (
-            <div key={step.title} className="relative rounded-[20px] border border-black/8 bg-[#faf8f4] p-4">
-              <div className="inline-flex rounded-full border border-black/8 bg-white px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-black/42">
-                Step {index + 1}
-              </div>
-              <h3 className="mt-3 text-base font-semibold tracking-[-0.03em] text-black/82">
+            <div
+              key={step.title}
+              className="relative rounded-[18px] border border-white/[0.08] bg-[#151821] p-4"
+            >
+              <StatusPill>{`Step ${index + 1}`}</StatusPill>
+              <h3 className="mt-3 text-base font-semibold tracking-[-0.03em] text-white/86">
                 {step.title}
               </h3>
-              <p className="mt-2 text-sm text-black/54">{step.meta}</p>
-              <div className="mt-4 inline-flex rounded-full border border-black/8 bg-white px-3 py-1 text-[11px] font-medium text-black/60">
+              <p className="mt-2 text-sm leading-6 text-white/56">{step.meta}</p>
+              <div className="mt-4 inline-flex rounded-full border border-white/[0.08] bg-white/[0.05] px-3 py-1 text-[11px] font-medium text-white/60">
                 {step.status}
               </div>
               {index < AUTOMATION_STEPS.length - 1 ? (
-                <div className="absolute -right-2 top-1/2 hidden h-px w-4 bg-black/12 xl:block" />
+                <div className="absolute -right-2 top-1/2 hidden h-px w-4 bg-white/[0.12] xl:block" />
               ) : null}
             </div>
           ))}
@@ -190,19 +214,19 @@ function AutomationPanel() {
       </div>
 
       <div className="grid gap-3 xl:grid-cols-[minmax(0,1fr)_220px]">
-        <div className="rounded-[24px] border border-black/8 bg-[#f4f7ff] p-4 shadow-[0_12px_28px_rgba(0,0,0,0.04)]">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-black/42">
+        <div className="rounded-[22px] border border-white/[0.08] bg-[#0f1117] p-4 shadow-[0_16px_28px_rgba(0,0,0,0.2)]">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/35">
             Safeguards
           </p>
           <div className="mt-3 space-y-2.5">
             {[
-              "Fallback owner assigned if no match is found.",
-              "Slack update sent only after approval status changes.",
-              "Database log stored for every automation run.",
+              "Fallback owner is assigned when no routing match is found.",
+              "Slack updates publish only after approval status changes.",
+              "Every automation run writes a clean audit log to the database.",
             ].map((item) => (
               <div
                 key={item}
-                className="rounded-[18px] border border-black/8 bg-white/88 px-4 py-3 text-sm leading-6 text-black/62"
+                className="rounded-[16px] border border-white/[0.08] bg-white/[0.04] px-4 py-3 text-sm leading-6 text-white/62"
               >
                 {item}
               </div>
@@ -210,8 +234,8 @@ function AutomationPanel() {
           </div>
         </div>
 
-        <div className="rounded-[24px] border border-black/8 bg-white/90 p-4 shadow-[0_12px_28px_rgba(0,0,0,0.04)]">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-black/42">
+        <div className="rounded-[22px] border border-white/[0.08] bg-[#111217] p-4 shadow-[0_16px_28px_rgba(0,0,0,0.2)]">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/35">
             Status
           </p>
           <div className="mt-3 space-y-2.5">
@@ -222,10 +246,10 @@ function AutomationPanel() {
             ].map(([label, value]) => (
               <div
                 key={label}
-                className="flex items-center justify-between rounded-[18px] border border-black/8 bg-[#faf8f4] px-3 py-3"
+                className="flex items-center justify-between rounded-[16px] border border-white/[0.08] bg-white/[0.04] px-3 py-3"
               >
-                <span className="text-sm text-black/56">{label}</span>
-                <span className="text-sm font-semibold text-black/76">{value}</span>
+                <span className="text-sm text-white/54">{label}</span>
+                <span className="text-sm font-semibold text-white/76">{value}</span>
               </div>
             ))}
           </div>
@@ -237,17 +261,17 @@ function AutomationPanel() {
 
 function InsightsPanel() {
   return (
-    <div className="space-y-4">
+    <div className="space-y-3.5">
       <div className="grid gap-3 md:grid-cols-3">
         {INSIGHT_METRICS.map((metric) => (
           <div
             key={metric.label}
-            className="rounded-[22px] border border-black/8 bg-white/92 px-4 py-4 shadow-[0_10px_24px_rgba(0,0,0,0.04)]"
+            className="rounded-[20px] border border-white/[0.08] bg-[#151821] px-4 py-4 shadow-[0_16px_28px_rgba(0,0,0,0.18)]"
           >
-            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-black/42">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/35">
               {metric.label}
             </p>
-            <p className="mt-3 text-2xl font-semibold tracking-[-0.05em] text-black/84">
+            <p className="mt-3 text-2xl font-semibold tracking-[-0.05em] text-white/84">
               {metric.value}
             </p>
           </div>
@@ -255,30 +279,28 @@ function InsightsPanel() {
       </div>
 
       <div className="grid gap-3 xl:grid-cols-[minmax(0,1fr)_240px]">
-        <div className="rounded-[24px] border border-black/8 bg-[#f6f4ef] p-4 shadow-[0_12px_28px_rgba(0,0,0,0.04)]">
-          <div className="flex items-center justify-between">
+        <div className="rounded-[22px] border border-white/[0.08] bg-[#111217] p-4 shadow-[0_16px_28px_rgba(0,0,0,0.2)]">
+          <div className="flex items-center justify-between gap-3">
             <div>
-              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-black/42">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/35">
                 Recommendations
               </p>
-              <p className="mt-1 text-sm font-semibold tracking-[-0.02em] text-black/84">
+              <p className="mt-1 text-sm font-semibold tracking-[-0.02em] text-white/84">
                 Next moves for the workspace
               </p>
             </div>
-            <div className="rounded-full border border-black/8 bg-white px-3 py-1 text-[11px] font-medium text-black/60">
-              AI summary
-            </div>
+            <StatusPill>AI summary</StatusPill>
           </div>
 
           <div className="mt-4 space-y-3">
             {[
-              "Promote the launch board template to the default intake flow.",
+              "Promote the roadmap template to the default intake flow.",
               "Archive inactive pages after seven days to reduce dashboard noise.",
               "Add one approval checkpoint before the fulfillment handoff.",
             ].map((item) => (
               <div
                 key={item}
-                className="rounded-[18px] border border-black/8 bg-white/88 px-4 py-3 text-sm leading-6 text-black/64"
+                className="rounded-[16px] border border-white/[0.08] bg-white/[0.04] px-4 py-3 text-sm leading-6 text-white/64"
               >
                 {item}
               </div>
@@ -286,8 +308,8 @@ function InsightsPanel() {
           </div>
         </div>
 
-        <div className="rounded-[24px] border border-black/8 bg-white/90 p-4 shadow-[0_12px_28px_rgba(0,0,0,0.04)]">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-black/42">
+        <div className="rounded-[22px] border border-white/[0.08] bg-[#0f1117] p-4 shadow-[0_16px_28px_rgba(0,0,0,0.2)]">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/35">
             Highlights
           </p>
           <div className="mt-3 space-y-2.5">
@@ -296,9 +318,12 @@ function InsightsPanel() {
               ["Watch item", "Two pages still use manual owner assignment."],
               ["Next test", "Measure handoff quality after template rollout."],
             ].map(([title, copy]) => (
-              <div key={title} className="rounded-[18px] border border-black/8 bg-[#faf8f4] px-3 py-3">
-                <p className="text-sm font-semibold text-black/78">{title}</p>
-                <p className="mt-1 text-sm leading-6 text-black/56">{copy}</p>
+              <div
+                key={title}
+                className="rounded-[16px] border border-white/[0.08] bg-white/[0.04] px-3 py-3"
+              >
+                <p className="text-sm font-semibold text-white/78">{title}</p>
+                <p className="mt-1 text-sm leading-6 text-white/56">{copy}</p>
               </div>
             ))}
           </div>
@@ -322,16 +347,18 @@ function DemoContent({ view }: { view: DemoView }) {
 
 export default function NotionWorkspaceDemo() {
   const shouldReduceMotion = useReducedMotion();
+  const reduceMotion = Boolean(shouldReduceMotion);
   const [activeView, setActiveView] = useState<DemoView>("workspace");
-  const transition = useMemo(() => getTransition(shouldReduceMotion), [shouldReduceMotion]);
+  const transition = useMemo(() => getTransition(reduceMotion), [reduceMotion]);
+  const activeMeta = useMemo(() => getViewMeta(activeView), [activeView]);
 
   return (
-    <div className="group relative h-[420px] w-full overflow-hidden rounded-[28px] border border-black/10 bg-white shadow-[0_24px_72px_rgba(0,0,0,0.12)] transition-shadow duration-300 hover:shadow-[0_30px_90px_rgba(0,0,0,0.16)] sm:h-[460px] lg:h-[520px]">
+    <div className="group relative h-[420px] w-full overflow-hidden rounded-[28px] border border-white/10 bg-[#0b0b0f] shadow-[0_30px_80px_rgba(0,0,0,0.45)] transition-shadow duration-300 hover:shadow-[0_36px_96px_rgba(0,0,0,0.52)] sm:h-[460px] lg:h-[520px]">
       <div
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(circle at 14% 10%, rgba(255,255,255,0.96), transparent 28%), radial-gradient(circle at 84% 12%, rgba(242,247,255,0.88), transparent 30%), linear-gradient(145deg, #f8f5ef 0%, #f3efe8 46%, #fbfaf8 100%)",
+            "radial-gradient(circle at 14% 10%, rgba(61,88,134,0.2), transparent 28%), radial-gradient(circle at 82% 16%, rgba(121,76,162,0.14), transparent 26%), linear-gradient(180deg, #0b0b0f 0%, #111218 42%, #17171d 100%)",
         }}
       />
       <div
@@ -339,81 +366,48 @@ export default function NotionWorkspaceDemo() {
         className="pointer-events-none absolute inset-0 opacity-25"
         style={{
           backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='%23000000' fill-opacity='.05'%3E%3Ccircle cx='14' cy='18' r='1'/%3E%3Ccircle cx='44' cy='30' r='1'/%3E%3Ccircle cx='90' cy='18' r='1'/%3E%3Ccircle cx='104' cy='56' r='1'/%3E%3Ccircle cx='26' cy='74' r='1'/%3E%3Ccircle cx='72' cy='86' r='1'/%3E%3Ccircle cx='30' cy='104' r='1'/%3E%3C/g%3E%3C/svg%3E\")",
+            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='%23ffffff' fill-opacity='.045'%3E%3Ccircle cx='14' cy='18' r='1'/%3E%3Ccircle cx='44' cy='30' r='1'/%3E%3Ccircle cx='90' cy='18' r='1'/%3E%3Ccircle cx='104' cy='56' r='1'/%3E%3Ccircle cx='26' cy='74' r='1'/%3E%3Ccircle cx='72' cy='86' r='1'/%3E%3Ccircle cx='30' cy='104' r='1'/%3E%3C/g%3E%3C/svg%3E\")",
         }}
       />
-      <div className="absolute inset-0 p-3 sm:p-4">
-        <div className="grid h-full grid-cols-[136px_minmax(0,1fr)] gap-3 rounded-[24px] border border-white/70 bg-white/62 p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.75)] backdrop-blur-[10px] sm:grid-cols-[164px_minmax(0,1fr)] lg:grid-cols-[176px_minmax(0,1fr)_188px]">
-          <aside className="flex min-h-0 flex-col rounded-[22px] border border-black/8 bg-[#fcfbf8] p-3">
-            <div>
-              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-black/42">
-                Workspace
-              </p>
-              <p className="mt-1 text-sm font-semibold tracking-[-0.03em] text-black/82">
-                Noricraft OS
-              </p>
+
+      <div className="absolute inset-0 p-2.5 sm:p-3">
+        <div className="flex h-full flex-col overflow-hidden rounded-[24px] border border-white/[0.08] bg-[#0e1015]/95 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] backdrop-blur-md">
+          <div className="flex h-12 items-center gap-3 border-b border-white/[0.08] bg-white/[0.03] px-4">
+            <div className="flex items-center gap-2">
+              <span className="h-3 w-3 rounded-full bg-[#ff5f57]" />
+              <span className="h-3 w-3 rounded-full bg-[#febc2e]" />
+              <span className="h-3 w-3 rounded-full bg-[#28c840]" />
             </div>
 
-            <div className="mt-4 space-y-2">
-              {NAV_ITEMS.map((item) => {
-                const isActive = activeView === item.id;
-
-                return (
-                  <button
-                    key={item.id}
-                    type="button"
-                    aria-label={`Open ${item.label} view`}
-                    aria-pressed={isActive}
-                    onClick={() => setActiveView(item.id)}
-                    className={`relative w-full rounded-[18px] border px-3 py-3 text-left transition ${
-                      isActive
-                        ? "border-black/12 bg-white shadow-[0_10px_20px_rgba(0,0,0,0.05)]"
-                        : "border-transparent bg-transparent hover:border-black/8 hover:bg-white/70"
-                    }`}
-                  >
-                    <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-black/40">
-                      {item.eyebrow}
-                    </div>
-                    <div className="mt-1 text-sm font-semibold tracking-[-0.02em] text-black/78">
-                      {item.label}
-                    </div>
-                    {isActive ? (
-                      <motion.div
-                        aria-hidden="true"
-                        className="absolute inset-0 rounded-[18px] ring-1 ring-black/6"
-                        layoutId="active-nav-item"
-                        transition={transition}
-                      />
-                    ) : null}
-                  </button>
-                );
-              })}
+            <div className="hidden items-center gap-2 sm:flex">
+              <div className="grid h-7 w-7 place-items-center rounded-lg border border-white/[0.08] bg-white/[0.04] text-[10px] font-semibold uppercase tracking-[0.12em] text-white/62">
+                N
+              </div>
+              <span className="text-sm font-medium text-white/76">Noricraft OS</span>
             </div>
 
-            <div className="mt-4 space-y-2 border-t border-black/8 pt-4">
-              {SECONDARY_ITEMS.map((item) => (
-                <div
-                  key={item.label}
-                  className="flex items-center justify-between rounded-[16px] bg-white/70 px-3 py-2.5"
-                >
-                  <span className="text-sm text-black/56">{item.label}</span>
-                  <span className="text-sm font-semibold text-black/74">{item.value}</span>
-                </div>
-              ))}
+            <div className="ml-auto flex min-w-0 items-center gap-2">
+              <div className="hidden min-w-[150px] flex-1 items-center rounded-full border border-white/[0.08] bg-white/[0.04] px-3 py-1.5 text-xs text-white/42 sm:flex">
+                Search workspace...
+              </div>
+              <span className="inline-flex rounded-full border border-[#2f6fed]/35 bg-[#102033] px-3 py-1 text-[11px] font-medium text-[#8cb4ff]">
+                Live system
+              </span>
             </div>
-          </aside>
+          </div>
 
-          <div className="flex min-h-0 flex-col rounded-[22px] border border-black/8 bg-white/72 p-3 sm:p-4">
-            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-black/8 pb-3">
+          <div className="grid min-h-0 flex-1 grid-cols-[136px_minmax(0,1fr)] gap-3 p-3 sm:grid-cols-[156px_minmax(0,1fr)] sm:p-4 lg:grid-cols-[176px_minmax(0,1fr)_188px]">
+            <aside className="flex min-h-0 flex-col rounded-[20px] border border-white/[0.08] bg-[#0f1117] p-3">
               <div>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-black/42">
-                  A workspace built around your team
+                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/34">
+                  Workspace
                 </p>
-                <p className="mt-1 text-lg font-semibold tracking-[-0.04em] text-black/86">
-                  Systems, automations, and answers in one place.
+                <p className="mt-1 text-sm font-semibold tracking-[-0.03em] text-white/82">
+                  Desktop system
                 </p>
               </div>
-              <div className="flex flex-wrap gap-2">
+
+              <div className="mt-4 space-y-2">
                 {NAV_ITEMS.map((item) => {
                   const isActive = activeView === item.id;
 
@@ -421,69 +415,132 @@ export default function NotionWorkspaceDemo() {
                     <button
                       key={item.id}
                       type="button"
-                      aria-label={`Switch to ${item.label}`}
+                      aria-label={`Open ${item.label} view`}
                       aria-pressed={isActive}
                       onClick={() => setActiveView(item.id)}
-                      className={`rounded-full border px-3 py-1.5 text-xs font-medium transition ${
+                      className={`relative w-full overflow-hidden rounded-[16px] border px-3 py-3 text-left transition ${
                         isActive
-                          ? "border-black/12 bg-black text-white"
-                          : "border-black/10 bg-white/80 text-black/62 hover:bg-black/5"
+                          ? "border-[#2f6fed]/40 bg-[#102033] text-white"
+                          : "border-transparent bg-transparent text-white/72 hover:border-white/[0.08] hover:bg-white/[0.04]"
                       }`}
                     >
-                      {item.label}
+                      {isActive ? (
+                        <motion.div
+                          aria-hidden="true"
+                          className="absolute inset-0 rounded-[16px] bg-[linear-gradient(135deg,rgba(47,111,237,0.16),rgba(78,52,129,0.12))] ring-1 ring-[#2f6fed]/30"
+                          layoutId="active-nav-item"
+                          transition={transition}
+                        />
+                      ) : null}
+                      <div className="relative z-10 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/36">
+                        {item.eyebrow}
+                      </div>
+                      <div className="relative z-10 mt-1 text-sm font-semibold tracking-[-0.02em] text-current">
+                        {item.label}
+                      </div>
                     </button>
                   );
                 })}
               </div>
+
+              <div className="mt-4 space-y-2 border-t border-white/[0.08] pt-4">
+                {SECONDARY_ITEMS.map((item) => (
+                  <div
+                    key={item.label}
+                    className="flex items-center justify-between rounded-[14px] border border-white/[0.05] bg-white/[0.03] px-3 py-2.5"
+                  >
+                    <span className="text-sm text-white/50">{item.label}</span>
+                    <span className="text-sm font-semibold text-white/74">{item.value}</span>
+                  </div>
+                ))}
+              </div>
+            </aside>
+
+            <div className="flex min-h-0 flex-col rounded-[20px] border border-white/[0.08] bg-[#111217] p-3 sm:p-4">
+              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.08] pb-3">
+                <div>
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/34">
+                    A workspace built around your team
+                  </p>
+                  <p className="mt-1 text-lg font-semibold tracking-[-0.04em] text-white/86">
+                    {activeMeta.title}
+                  </p>
+                  <p className="mt-1 text-sm text-white/52">{activeMeta.detail}</p>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-2">
+                  <StatusPill>{activeMeta.pill}</StatusPill>
+                  {NAV_ITEMS.map((item) => {
+                    const isActive = activeView === item.id;
+
+                    return (
+                      <button
+                        key={item.id}
+                        type="button"
+                        aria-label={`Switch to ${item.label}`}
+                        aria-pressed={isActive}
+                        onClick={() => setActiveView(item.id)}
+                        className={`rounded-full border px-3 py-1.5 text-xs font-medium transition ${
+                          isActive
+                            ? "border-[#2f6fed]/40 bg-[#102033] text-[#9abaff]"
+                            : "border-white/[0.08] bg-white/[0.04] text-white/58 hover:bg-white/[0.07]"
+                        }`}
+                      >
+                        {item.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="mt-3 flex-1 overflow-hidden">
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.div
+                    key={activeView}
+                    initial={reduceMotion ? false : { opacity: 0, x: 14, y: 10 }}
+                    animate={{ opacity: 1, x: 0, y: 0 }}
+                    exit={reduceMotion ? { opacity: 1 } : { opacity: 0, x: -12, y: -8 }}
+                    transition={transition}
+                    className="h-full overflow-auto pr-1"
+                  >
+                    <DemoContent view={activeView} />
+                  </motion.div>
+                </AnimatePresence>
+              </div>
             </div>
 
-            <div className="mt-3 flex-1 overflow-hidden">
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.div
-                  key={activeView}
-                  initial={shouldReduceMotion ? false : { opacity: 0, x: 14, y: 10 }}
-                  animate={{ opacity: 1, x: 0, y: 0 }}
-                  exit={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, x: -12, y: -8 }}
-                  transition={transition}
-                  className="h-full overflow-auto pr-1"
-                >
-                  <DemoContent view={activeView} />
-                </motion.div>
-              </AnimatePresence>
-            </div>
+            <aside className="hidden min-h-0 flex-col rounded-[20px] border border-white/[0.08] bg-[#0f1117] p-3 lg:flex">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/34">
+                Assistant
+              </p>
+              <div className="mt-3 space-y-2.5">
+                {[
+                  "Suggesting a simpler intake view for new client requests.",
+                  "Detected repeated handoff steps that can become one automation.",
+                  "Highlighting pages with the highest approval lag.",
+                ].map((item, index) => (
+                  <motion.div
+                    key={item}
+                    initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={reduceMotion ? { duration: 0 } : { ...transition, delay: index * 0.05 }}
+                    className="rounded-[16px] border border-white/[0.08] bg-white/[0.04] px-3 py-3 text-sm leading-6 text-white/60 shadow-[0_10px_20px_rgba(0,0,0,0.16)]"
+                  >
+                    {item}
+                  </motion.div>
+                ))}
+              </div>
+
+              <div className="mt-auto rounded-[16px] border border-white/[0.08] bg-white/[0.04] p-3">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/34">
+                  Quick note
+                </p>
+                <p className="mt-2 text-sm leading-6 text-white/58">
+                  Navigation swaps the active workspace state without changing the hero layout.
+                </p>
+              </div>
+            </aside>
           </div>
-
-          <aside className="hidden min-h-0 flex-col rounded-[22px] border border-black/8 bg-[#faf8f4] p-3 lg:flex">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-black/42">
-              Assistant
-            </p>
-            <div className="mt-3 space-y-2.5">
-              {[
-                "Suggesting a simpler intake view for new client requests.",
-                "Detected repeated handoff steps that can become one automation.",
-                "Highlighting pages with the highest approval lag.",
-              ].map((item, index) => (
-                <motion.div
-                  key={item}
-                  initial={shouldReduceMotion ? false : { opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={shouldReduceMotion ? { duration: 0 } : { ...transition, delay: index * 0.05 }}
-                  className="rounded-[18px] border border-black/8 bg-white/90 px-3 py-3 text-sm leading-6 text-black/60 shadow-[0_10px_20px_rgba(0,0,0,0.03)]"
-                >
-                  {item}
-                </motion.div>
-              ))}
-            </div>
-
-            <div className="mt-auto rounded-[18px] border border-black/8 bg-white/92 p-3">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-black/42">
-                Quick note
-              </p>
-              <p className="mt-2 text-sm leading-6 text-black/58">
-                Click the navigation to swap the workspace state without changing the hero layout.
-              </p>
-            </div>
-          </aside>
         </div>
       </div>
     </div>

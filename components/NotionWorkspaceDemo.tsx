@@ -476,30 +476,14 @@ export default function NotionWorkspaceDemo() {
 
   return (
     <div
-      className="group relative h-[420px] w-full overflow-hidden rounded-[28px] border border-white/[0.08] bg-[#191919] shadow-[0_30px_80px_rgba(0,0,0,0.38)] transition-shadow duration-300 hover:shadow-[0_36px_96px_rgba(0,0,0,0.44)] sm:h-[460px] lg:h-[520px]"
+      className="relative h-[420px] w-full sm:h-[460px] lg:h-[520px]"
       style={{
         fontFamily:
           '"Inter", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif',
       }}
     >
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(circle at 18% 10%, rgba(255,255,255,0.035), transparent 26%), radial-gradient(circle at 84% 18%, rgba(255,255,255,0.025), transparent 28%), linear-gradient(180deg, #191919 0%, #1f1f1f 48%, #191919 100%)",
-        }}
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-25"
-        style={{
-          backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='%23ffffff' fill-opacity='.045'%3E%3Ccircle cx='14' cy='18' r='1'/%3E%3Ccircle cx='44' cy='30' r='1'/%3E%3Ccircle cx='90' cy='18' r='1'/%3E%3Ccircle cx='104' cy='56' r='1'/%3E%3Ccircle cx='26' cy='74' r='1'/%3E%3Ccircle cx='72' cy='86' r='1'/%3E%3Ccircle cx='30' cy='104' r='1'/%3E%3C/g%3E%3C/svg%3E\")",
-        }}
-      />
-
-      <div className="absolute inset-0 p-2.5 sm:p-3">
-        <div className="flex h-full flex-col overflow-hidden rounded-[24px] border border-white/[0.08] bg-[#191919]/95 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] backdrop-blur-md">
+      <div className="absolute inset-0">
+        <div className="flex h-full flex-col overflow-hidden rounded-[24px] border border-white/[0.1] bg-[#191919] shadow-[0_30px_80px_rgba(0,0,0,0.42)]">
           <div className="flex h-12 items-center gap-3 border-b border-white/[0.08] bg-[#202020] px-4">
             <div className="flex items-center gap-2">
               <span className="h-3 w-3 rounded-full bg-[#ff5f57]" />

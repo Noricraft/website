@@ -1,6 +1,6 @@
 ﻿import Image from "next/image";
 import Link from "next/link";
-import DesktopDemo from "../components/DesktopDemo";
+import NotionWorkspaceDemo from "../components/NotionWorkspaceDemo";
 import { shopifyFetch } from "../lib/shopify";
 import {
   SHOP_PRODUCTS_QUERY,
@@ -107,12 +107,12 @@ export default async function Home() {
                     </div>
                     <div className="hero-proof">
                       <Image src="/logo.svg" alt="" aria-hidden="true" width={18} height={18} />
-                      <span>Drag the windows to explore the demo workspace.</span>
+                      <span>Click through the workspace to see how it adapts.</span>
                     </div>
                   </div>
 
                   <div className="relative mt-8 md:mt-0 md:-ml-4 lg:-ml-8">
-                    <DesktopDemo />
+                    <NotionWorkspaceDemo />
                   </div>
                 </div>
               </div>

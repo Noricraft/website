@@ -170,7 +170,7 @@ function getViewMeta(view: DemoView) {
 
 function StatusPill({ children }: { children: React.ReactNode }) {
   return (
-    <span className="inline-flex w-fit rounded-full border border-white/[0.12] bg-white/[0.06] px-2.5 py-1 text-[11px] font-medium text-white/58">
+    <span className="inline-flex w-fit rounded-full border border-white/[0.1] bg-white/[0.055] px-2.5 py-1 text-[11px] font-medium text-white/52">
       {children}
     </span>
   );
@@ -183,22 +183,22 @@ function WorkspacePanel() {
         {WORKSPACE_CARDS.map((card) => (
           <div
             key={card.title}
-            className="rounded-[20px] border border-white/[0.08] bg-[#151821] px-4 py-4 shadow-[0_16px_28px_rgba(0,0,0,0.18)]"
+            className="rounded-[20px] border border-white/[0.08] bg-[#252525] px-4 py-4 shadow-[0_16px_28px_rgba(0,0,0,0.18)]"
           >
             <StatusPill>Page</StatusPill>
             <h3 className="mt-3 text-base font-semibold tracking-[-0.02em] text-white/88">
               {card.title}
             </h3>
-            <p className="mt-2 text-sm leading-6 text-white/58">{card.detail}</p>
+            <p className="mt-2 text-sm leading-6 text-white/56">{card.detail}</p>
           </div>
         ))}
       </div>
 
       <div className="grid gap-3 xl:grid-cols-[minmax(0,1fr)_220px]">
-        <div className="rounded-[22px] border border-white/[0.08] bg-[#111217] p-4 shadow-[0_16px_28px_rgba(0,0,0,0.2)]">
+        <div className="rounded-[22px] border border-white/[0.08] bg-[#202020] p-4 shadow-[0_16px_28px_rgba(0,0,0,0.2)]">
           <div className="flex items-center justify-between gap-3">
             <div>
-              <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/35">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/36">
                 Core database
               </p>
               <p className="mt-1 text-sm font-semibold tracking-[-0.01em] text-white/84">
@@ -208,8 +208,8 @@ function WorkspacePanel() {
             <StatusPill>Synced</StatusPill>
           </div>
 
-          <div className="mt-4 overflow-hidden rounded-[18px] border border-white/[0.08] bg-[#0d0f14]">
-            <div className="grid grid-cols-[minmax(0,1.8fr)_88px_92px] border-b border-white/[0.08] bg-white/[0.04] px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.08em] text-white/36">
+          <div className="mt-4 overflow-hidden rounded-[18px] border border-white/[0.08] bg-[#1f1f1f]">
+            <div className="grid grid-cols-[minmax(0,1.8fr)_88px_92px] border-b border-white/[0.08] bg-white/[0.045] px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.08em] text-white/36">
               <span>Item</span>
               <span>Owner</span>
               <span>Status</span>
@@ -219,9 +219,9 @@ function WorkspacePanel() {
                 key={row.name}
                 className="grid grid-cols-[minmax(0,1.8fr)_88px_92px] items-center border-b border-white/[0.06] px-3 py-3 last:border-b-0"
               >
-                <span className="truncate pr-3 text-sm font-medium text-white/78">{row.name}</span>
-                <span className="text-sm text-white/48">{row.owner}</span>
-                <span className="inline-flex w-fit rounded-full border border-[#2f6fed]/40 bg-[#102033] px-2.5 py-1 text-[11px] font-medium text-[#8cb4ff]">
+                <span className="truncate pr-3 text-sm font-medium text-white/80">{row.name}</span>
+                <span className="text-sm text-white/52">{row.owner}</span>
+                <span className="inline-flex w-fit rounded-full border border-white/[0.1] bg-white/[0.065] px-2.5 py-1 text-[11px] font-medium text-white/65">
                   {row.status}
                 </span>
               </div>
@@ -229,20 +229,20 @@ function WorkspacePanel() {
           </div>
         </div>
 
-        <div className="rounded-[22px] border border-white/[0.08] bg-[#0f1117] p-4 shadow-[0_16px_28px_rgba(0,0,0,0.2)]">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/35">
+        <div className="rounded-[22px] border border-white/[0.08] bg-[#202020] p-4 shadow-[0_16px_28px_rgba(0,0,0,0.2)]">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/36">
             Action queue
           </p>
           <div className="mt-3 space-y-2.5">
             {["Planning locked", "Assets attached", "Handoff ready"].map((item) => (
               <div
                 key={item}
-                className="flex items-center gap-3 rounded-[16px] border border-white/[0.08] bg-white/[0.04] px-3 py-3"
+                className="flex items-center gap-3 rounded-[16px] border border-white/[0.08] bg-white/[0.045] px-3 py-3"
               >
-                <span className="grid h-6 w-6 place-items-center rounded-full border border-[#2f6fed]/40 bg-[#102033] text-[10px] font-semibold uppercase text-[#9abaff]">
+                <span className="grid h-6 w-6 place-items-center rounded-full border border-white/[0.1] bg-white/[0.065] text-[10px] font-semibold uppercase text-white/65">
                   OK
                 </span>
-                <span className="text-sm font-medium text-white/72">{item}</span>
+                <span className="text-sm font-medium text-white/74">{item}</span>
               </div>
             ))}
           </div>
@@ -255,10 +255,10 @@ function WorkspacePanel() {
 function AutomationPanel() {
   return (
     <div className="space-y-3.5">
-        <div className="rounded-[22px] border border-white/[0.08] bg-[#111217] p-4 shadow-[0_16px_28px_rgba(0,0,0,0.2)]">
+        <div className="rounded-[22px] border border-white/[0.08] bg-[#202020] p-4 shadow-[0_16px_28px_rgba(0,0,0,0.2)]">
           <div className="flex items-center justify-between gap-3">
             <div>
-              <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/35">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/36">
                 Automation map
               </p>
               <p className="mt-1 text-sm font-semibold tracking-[-0.01em] text-white/84">
@@ -272,14 +272,14 @@ function AutomationPanel() {
           {AUTOMATION_STEPS.map((step, index) => (
             <div
               key={step.title}
-              className="relative rounded-[18px] border border-white/[0.08] bg-[#151821] p-4"
+              className="relative rounded-[18px] border border-white/[0.08] bg-[#252525] p-4"
             >
               <StatusPill>{`Step ${index + 1}`}</StatusPill>
               <h3 className="mt-3 text-base font-semibold tracking-[-0.02em] text-white/86">
                 {step.title}
               </h3>
               <p className="mt-2 text-sm leading-6 text-white/56">{step.meta}</p>
-              <div className="mt-4 inline-flex rounded-full border border-white/[0.08] bg-white/[0.05] px-3 py-1 text-[11px] font-medium text-white/60">
+              <div className="mt-4 inline-flex rounded-full border border-white/[0.1] bg-white/[0.055] px-3 py-1 text-[11px] font-medium text-white/60">
                 {step.status}
               </div>
               {index < AUTOMATION_STEPS.length - 1 ? (
@@ -291,8 +291,8 @@ function AutomationPanel() {
       </div>
 
       <div className="grid gap-3 xl:grid-cols-[minmax(0,1fr)_220px]">
-        <div className="rounded-[22px] border border-white/[0.08] bg-[#0f1117] p-4 shadow-[0_16px_28px_rgba(0,0,0,0.2)]">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/35">
+        <div className="rounded-[22px] border border-white/[0.08] bg-[#202020] p-4 shadow-[0_16px_28px_rgba(0,0,0,0.2)]">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/36">
             Safeguards
           </p>
           <div className="mt-3 space-y-2.5">
@@ -303,7 +303,7 @@ function AutomationPanel() {
             ].map((item) => (
               <div
                 key={item}
-                className="rounded-[16px] border border-white/[0.08] bg-white/[0.04] px-4 py-3 text-sm leading-6 text-white/62"
+                className="rounded-[16px] border border-white/[0.08] bg-white/[0.045] px-4 py-3 text-sm leading-6 text-white/58"
               >
                 {item}
               </div>
@@ -311,8 +311,8 @@ function AutomationPanel() {
           </div>
         </div>
 
-        <div className="rounded-[22px] border border-white/[0.08] bg-[#111217] p-4 shadow-[0_16px_28px_rgba(0,0,0,0.2)]">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/35">
+        <div className="rounded-[22px] border border-white/[0.08] bg-[#202020] p-4 shadow-[0_16px_28px_rgba(0,0,0,0.2)]">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/36">
             Status
           </p>
           <div className="mt-3 space-y-2.5">
@@ -323,10 +323,10 @@ function AutomationPanel() {
             ].map(([label, value]) => (
               <div
                 key={label}
-                className="flex items-center justify-between rounded-[16px] border border-white/[0.08] bg-white/[0.04] px-3 py-3"
+                className="flex items-center justify-between rounded-[16px] border border-white/[0.08] bg-white/[0.045] px-3 py-3"
               >
-                <span className="text-sm text-white/54">{label}</span>
-                <span className="text-sm font-semibold text-white/76">{value}</span>
+                <span className="text-sm text-white/55">{label}</span>
+                <span className="text-sm font-semibold text-white/78">{value}</span>
               </div>
             ))}
           </div>
@@ -343,9 +343,9 @@ function InsightsPanel() {
         {INSIGHT_METRICS.map((metric) => (
           <div
             key={metric.label}
-            className="rounded-[20px] border border-white/[0.08] bg-[#151821] px-4 py-4 shadow-[0_16px_28px_rgba(0,0,0,0.18)]"
+            className="rounded-[20px] border border-white/[0.08] bg-[#252525] px-4 py-4 shadow-[0_16px_28px_rgba(0,0,0,0.18)]"
           >
-            <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/35">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/36">
               {metric.label}
             </p>
             <p className="mt-3 text-2xl font-semibold tracking-[-0.05em] text-white/84">
@@ -356,10 +356,10 @@ function InsightsPanel() {
       </div>
 
       <div className="grid gap-3 xl:grid-cols-[minmax(0,1fr)_240px]">
-        <div className="rounded-[22px] border border-white/[0.08] bg-[#111217] p-4 shadow-[0_16px_28px_rgba(0,0,0,0.2)]">
+        <div className="rounded-[22px] border border-white/[0.08] bg-[#202020] p-4 shadow-[0_16px_28px_rgba(0,0,0,0.2)]">
           <div className="flex items-center justify-between gap-3">
             <div>
-              <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/35">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/36">
                 Recommendations
               </p>
               <p className="mt-1 text-sm font-semibold tracking-[-0.01em] text-white/84">
@@ -377,7 +377,7 @@ function InsightsPanel() {
             ].map((item) => (
               <div
                 key={item}
-                className="rounded-[16px] border border-white/[0.08] bg-white/[0.04] px-4 py-3 text-sm leading-6 text-white/64"
+                className="rounded-[16px] border border-white/[0.08] bg-white/[0.045] px-4 py-3 text-sm leading-6 text-white/58"
               >
                 {item}
               </div>
@@ -385,8 +385,8 @@ function InsightsPanel() {
           </div>
         </div>
 
-        <div className="rounded-[22px] border border-white/[0.08] bg-[#0f1117] p-4 shadow-[0_16px_28px_rgba(0,0,0,0.2)]">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/35">
+        <div className="rounded-[22px] border border-white/[0.08] bg-[#202020] p-4 shadow-[0_16px_28px_rgba(0,0,0,0.2)]">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/36">
             Highlights
           </p>
           <div className="mt-3 space-y-2.5">
@@ -397,9 +397,9 @@ function InsightsPanel() {
             ].map(([title, copy]) => (
               <div
                 key={title}
-                className="rounded-[16px] border border-white/[0.08] bg-white/[0.04] px-3 py-3"
+                className="rounded-[16px] border border-white/[0.08] bg-white/[0.045] px-3 py-3"
               >
-                <p className="text-sm font-semibold text-white/78">{title}</p>
+                <p className="text-sm font-semibold text-white/80">{title}</p>
                 <p className="mt-1 text-sm leading-6 text-white/56">{copy}</p>
               </div>
             ))}
@@ -476,7 +476,7 @@ export default function NotionWorkspaceDemo() {
 
   return (
     <div
-      className="group relative h-[420px] w-full overflow-hidden rounded-[28px] border border-white/10 bg-[#0b0b0f] shadow-[0_30px_80px_rgba(0,0,0,0.45)] transition-shadow duration-300 hover:shadow-[0_36px_96px_rgba(0,0,0,0.52)] sm:h-[460px] lg:h-[520px]"
+      className="group relative h-[420px] w-full overflow-hidden rounded-[28px] border border-white/[0.08] bg-[#191919] shadow-[0_30px_80px_rgba(0,0,0,0.38)] transition-shadow duration-300 hover:shadow-[0_36px_96px_rgba(0,0,0,0.44)] sm:h-[460px] lg:h-[520px]"
       style={{
         fontFamily:
           '"Inter", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif',
@@ -486,7 +486,7 @@ export default function NotionWorkspaceDemo() {
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(circle at 14% 10%, rgba(61,88,134,0.2), transparent 28%), radial-gradient(circle at 82% 16%, rgba(121,76,162,0.14), transparent 26%), linear-gradient(180deg, #0b0b0f 0%, #111218 42%, #17171d 100%)",
+            "radial-gradient(circle at 18% 10%, rgba(255,255,255,0.035), transparent 26%), radial-gradient(circle at 84% 18%, rgba(255,255,255,0.025), transparent 28%), linear-gradient(180deg, #191919 0%, #1f1f1f 48%, #191919 100%)",
         }}
       />
       <div
@@ -499,8 +499,8 @@ export default function NotionWorkspaceDemo() {
       />
 
       <div className="absolute inset-0 p-2.5 sm:p-3">
-        <div className="flex h-full flex-col overflow-hidden rounded-[24px] border border-white/[0.08] bg-[#0e1015]/95 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] backdrop-blur-md">
-          <div className="flex h-12 items-center gap-3 border-b border-white/[0.08] bg-white/[0.03] px-4">
+        <div className="flex h-full flex-col overflow-hidden rounded-[24px] border border-white/[0.08] bg-[#191919]/95 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] backdrop-blur-md">
+          <div className="flex h-12 items-center gap-3 border-b border-white/[0.08] bg-[#202020] px-4">
             <div className="flex items-center gap-2">
               <span className="h-3 w-3 rounded-full bg-[#ff5f57]" />
               <span className="h-3 w-3 rounded-full bg-[#febc2e]" />
@@ -508,7 +508,7 @@ export default function NotionWorkspaceDemo() {
             </div>
 
             <div className="hidden items-center gap-2 sm:flex">
-              <div className="grid h-7 w-7 place-items-center rounded-lg border border-white/[0.08] bg-white/[0.04] font-serif text-[11px] font-semibold text-white/72 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
+              <div className="grid h-7 w-7 place-items-center rounded-lg border border-white/[0.08] bg-[#2a2a2a] font-serif text-[11px] font-semibold text-white/72 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
                 N
               </div>
               <span className="inline-flex min-w-[164px] items-center text-sm font-medium text-white/76 sm:min-w-[192px]">
@@ -526,17 +526,17 @@ export default function NotionWorkspaceDemo() {
             </div>
 
             <div className="ml-auto flex min-w-0 items-center gap-2">
-              <div className="hidden min-w-[150px] flex-1 items-center rounded-full border border-white/[0.08] bg-white/[0.04] px-3 py-1.5 text-xs text-white/42 sm:flex">
+              <div className="hidden min-w-[150px] flex-1 items-center rounded-full border border-white/[0.08] bg-[#2a2a2a] px-3 py-1.5 text-xs text-white/40 sm:flex">
                 Search workspace...
               </div>
-              <span className="inline-flex rounded-full border border-[#2f6fed]/35 bg-[#102033] px-3 py-1 text-[11px] font-medium text-[#8cb4ff]">
+              <span className="inline-flex rounded-full border border-white/[0.1] bg-white/[0.06] px-3 py-1 text-[11px] font-medium text-white/55">
                 Live system
               </span>
             </div>
           </div>
 
           <div className="grid min-h-0 flex-1 grid-cols-[136px_minmax(0,1fr)] gap-3 p-3 sm:grid-cols-[156px_minmax(0,1fr)] sm:p-4 lg:grid-cols-[176px_minmax(0,1fr)_188px]">
-            <aside className="flex min-h-0 flex-col rounded-[20px] border border-white/[0.08] bg-[#0f1117] px-2.5 pb-2.5 pt-2">
+            <aside className="flex min-h-0 flex-col rounded-[20px] border border-white/[0.08] bg-[#202020] px-2.5 pb-2.5 pt-2">
               <div className="px-1.5">
                 <p className="text-[11px] font-medium leading-none text-white/38">Private</p>
               </div>
@@ -558,7 +558,7 @@ export default function NotionWorkspaceDemo() {
                       className={`flex w-full cursor-pointer appearance-none items-center gap-2 rounded-md border-0 px-2 py-1.5 text-left text-sm font-medium transition active:bg-white/[0.075] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-white/30 ${
                         isActive
                           ? "bg-white/[0.08] text-white/88"
-                          : "text-white/58 hover:bg-white/[0.045] hover:text-white/78"
+                          : "text-white/55 hover:bg-white/[0.055] hover:text-white/78"
                       }`}
                     >
                       <span className="grid h-5 w-5 shrink-0 place-items-center text-[13px] leading-none">
@@ -579,16 +579,16 @@ export default function NotionWorkspaceDemo() {
               </div>
             </aside>
 
-            <div className="flex min-h-0 flex-col rounded-[20px] border border-white/[0.08] bg-[#111217] p-3 sm:p-4">
+            <div className="flex min-h-0 flex-col rounded-[20px] border border-white/[0.08] bg-[#191919] p-3 sm:p-4">
             <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.08] pb-3">
               <div>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/34">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/36">
                   A workspace built around your team
                 </p>
                   <p className="mt-1 text-lg font-semibold tracking-[-0.04em] text-white/86">
                     {activeMeta.title}
                   </p>
-                  <p className="mt-1 text-sm text-white/52">{activeMeta.detail}</p>
+                  <p className="mt-1 text-sm text-white/55">{activeMeta.detail}</p>
                 </div>
 
                 <div className="flex flex-wrap items-center gap-2">
@@ -605,8 +605,8 @@ export default function NotionWorkspaceDemo() {
                         onClick={() => setActiveView(item.id)}
                         className={`rounded-full border px-3 py-1.5 text-xs font-medium transition ${
                           isActive
-                            ? "border-[#2f6fed]/40 bg-[#102033] text-[#9abaff]"
-                            : "border-white/[0.08] bg-white/[0.04] text-white/58 hover:bg-white/[0.07]"
+                            ? "border-white/[0.12] bg-white/[0.09] text-white/82"
+                            : "border-white/[0.08] bg-white/[0.045] text-white/55 hover:bg-white/[0.07]"
                         }`}
                       >
                         {item.label}
@@ -632,8 +632,8 @@ export default function NotionWorkspaceDemo() {
               </div>
             </div>
 
-            <aside className="hidden min-h-0 flex-col rounded-[20px] border border-white/[0.08] bg-[#0f1117] p-3 lg:flex">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/34">
+            <aside className="hidden min-h-0 flex-col rounded-[20px] border border-white/[0.08] bg-[#202020] p-3 lg:flex">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/36">
                 Assistant
               </p>
               <div className="mt-3 space-y-2.5">
@@ -647,18 +647,18 @@ export default function NotionWorkspaceDemo() {
                     initial={reduceMotion ? false : { opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={reduceMotion ? { duration: 0 } : { ...transition, delay: index * 0.05 }}
-                    className="rounded-[16px] border border-white/[0.08] bg-white/[0.04] px-3 py-3 text-sm leading-6 text-white/60 shadow-[0_10px_20px_rgba(0,0,0,0.16)]"
+                    className="rounded-[16px] border border-white/[0.08] bg-white/[0.045] px-3 py-3 text-sm leading-6 text-white/58 shadow-[0_10px_20px_rgba(0,0,0,0.16)]"
                   >
                     {item}
                   </motion.div>
                 ))}
               </div>
 
-              <div className="mt-auto rounded-[16px] border border-white/[0.08] bg-white/[0.04] p-3">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/34">
+              <div className="mt-auto rounded-[16px] border border-white/[0.08] bg-white/[0.045] p-3">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/36">
                   Quick note
                 </p>
-                <p className="mt-2 text-sm leading-6 text-white/58">
+                <p className="mt-2 text-sm leading-6 text-white/56">
                   Navigation swaps the active workspace state without changing the hero layout.
                 </p>
               </div>

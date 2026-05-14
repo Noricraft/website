@@ -88,72 +88,72 @@ const OS_SYSTEMS: OsSystem[] = [
   {
     title: "Travel",
     menu: [
-      { emoji: "âś…", label: "Task" },
-      { emoji: "đź§ł", label: "Travels" },
-      { emoji: "đź“”", label: "Journal" },
-      { emoji: "đźŚŤ", label: "Country base" },
-      { emoji: "đźŽ’", label: "Packing" },
-      { emoji: "đź’¸", label: "Budget" },
+      { emoji: "✅", label: "Task" },
+      { emoji: "🧳", label: "Travels" },
+      { emoji: "📔", label: "Journal" },
+      { emoji: "🌍", label: "Country base" },
+      { emoji: "🎒", label: "Packing" },
+      { emoji: "💸", label: "Budget" },
     ],
   },
   {
     title: "Study",
     menu: [
-      { emoji: "đź§Ş", label: "Exams" },
-      { emoji: "đź“ť", label: "Homeworks" },
-      { emoji: "đź“", label: "Projects" },
-      { emoji: "đź—“ď¸Ź", label: "Schedule" },
-      { emoji: "đź“…", label: "Calendar" },
-      { emoji: "đź“’", label: "Notes" },
+      { emoji: "🧪", label: "Exams" },
+      { emoji: "📝", label: "Homeworks" },
+      { emoji: "📁", label: "Projects" },
+      { emoji: "🗓️", label: "Schedule" },
+      { emoji: "📅", label: "Calendar" },
+      { emoji: "📒", label: "Notes" },
     ],
   },
   {
     title: "Job Hunting",
     menu: [
-      { emoji: "đźŽŻ", label: "Job search plan" },
-      { emoji: "đź“¨", label: "Applications" },
-      { emoji: "đźŹ˘", label: "Companies" },
-      { emoji: "đź¤ť", label: "Networking" },
-      { emoji: "đź’¬", label: "Interviews" },
-      { emoji: "đź“„", label: "Documents" },
-      { emoji: "đź”—", label: "Resources" },
+      { emoji: "🎯", label: "Job search plan" },
+      { emoji: "📨", label: "Applications" },
+      { emoji: "🏢", label: "Companies" },
+      { emoji: "🤝", label: "Networking" },
+      { emoji: "💬", label: "Interviews" },
+      { emoji: "📄", label: "Documents" },
+      { emoji: "🔗", label: "Resources" },
     ],
   },
   {
     title: "Daily Tracker",
     menu: [
-      { emoji: "âś…", label: "Tasks" },
-      { emoji: "đź’»", label: "Work" },
-      { emoji: "đź“", label: "Projects" },
-      { emoji: "đź“’", label: "Notes" },
-      { emoji: "đźŚ±", label: "Habits" },
-      { emoji: "đź§­", label: "Purpose" },
+      { emoji: "✅", label: "Tasks" },
+      { emoji: "💻", label: "Work" },
+      { emoji: "📁", label: "Projects" },
+      { emoji: "📒", label: "Notes" },
+      { emoji: "🌱", label: "Habits" },
+      { emoji: "🧭", label: "Purpose" },
     ],
   },
   {
     title: "Gym Progress",
     menu: [
-      { emoji: "đźŽŻ", label: "Fitness goals" },
-      { emoji: "đź“‹", label: "Workout plan" },
-      { emoji: "đźŹ‹ď¸Ź", label: "Workouts" },
-      { emoji: "đź“", label: "Progress" },
-      { emoji: "đź“Ź", label: "Body measurements" },
-      { emoji: "đźĄ—", label: "Nutrition" },
-      { emoji: "đź§", label: "Recovery" },
-      { emoji: "đź”—", label: "Resources" },
+      { emoji: "🎯", label: "Fitness goals" },
+      { emoji: "📋", label: "Workout plan" },
+      { emoji: "🏋️", label: "Workouts" },
+      { emoji: "📈", label: "Progress" },
+      { emoji: "📏", label: "Body measurements" },
+      { emoji: "🥗", label: "Nutrition" },
+      { emoji: "🧘", label: "Recovery" },
+      { emoji: "🔗", label: "Resources" },
     ],
   },
   {
     title: "Gym Trainer",
     menu: [
-      { emoji: "đź‘Ą", label: "Clients" },
-      { emoji: "đź—“ď¸Ź", label: "Schedule" },
-      { emoji: "đź“‹", label: "Training plans" },
-      { emoji: "đźŹ‹ď¸Ź", label: "Workouts" },
-      { emoji: "đź“", label: "Client progress" },
-      { emoji: "đźĄ—", label: "Nutrition" },
-      { emoji: "âś…", label: "Check-ins" },
-      { emoji: "đź’ł", label: "Payments" },
+      { emoji: "👥", label: "Clients" },
+      { emoji: "🗓️", label: "Schedule" },
+      { emoji: "📋", label: "Training plans" },
+      { emoji: "🏋️", label: "Workouts" },
+      { emoji: "📈", label: "Client progress" },
+      { emoji: "🥗", label: "Nutrition" },
+      { emoji: "✅", label: "Check-ins" },
+      { emoji: "💳", label: "Payments" },
     ],
   },
 ];
@@ -749,7 +749,13 @@ export default function NotionWorkspaceDemo() {
                           : themeClasses.sidebarItemInactive
                       } ${isActive && !isLightTheme ? "!text-white" : ""}`}
                     >
-                      <span className="grid h-5 w-5 shrink-0 place-items-center text-[13px] leading-none">
+                      <span
+                        className="grid h-5 w-5 shrink-0 place-items-center text-[13px] leading-none"
+                        style={{
+                          fontFamily:
+                            '"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif',
+                        }}
+                      >
                         {item.emoji}
                       </span>
                       <span className="min-w-0 truncate">

@@ -170,7 +170,7 @@ function getViewMeta(view: DemoView) {
 
 function StatusPill({ children }: { children: React.ReactNode }) {
   return (
-    <span className="inline-flex w-fit rounded-full border border-white/[0.1] bg-white/[0.055] px-2.5 py-1 text-[11px] font-medium text-white/52">
+    <span className="inline-flex w-fit rounded-full border border-white/[0.1] bg-white/[0.055] px-2.5 py-1 text-[11px] font-medium !text-white/55">
       {children}
     </span>
   );
@@ -186,10 +186,10 @@ function WorkspacePanel() {
             className="rounded-[20px] border border-white/[0.08] bg-[#252525] px-4 py-4 shadow-[0_16px_28px_rgba(0,0,0,0.18)]"
           >
             <StatusPill>Page</StatusPill>
-            <h3 className="mt-3 text-base font-semibold tracking-[-0.02em] text-white/88">
+            <h3 className="mt-3 text-base font-semibold tracking-[-0.02em] !text-white/88">
               {card.title}
             </h3>
-            <p className="mt-2 text-sm leading-6 text-white/56">{card.detail}</p>
+            <p className="mt-2 text-sm leading-6 !text-white/60">{card.detail}</p>
           </div>
         ))}
       </div>
@@ -198,10 +198,10 @@ function WorkspacePanel() {
         <div className="rounded-[22px] border border-white/[0.08] bg-[#202020] p-4 shadow-[0_16px_28px_rgba(0,0,0,0.2)]">
           <div className="flex items-center justify-between gap-3">
             <div>
-              <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/36">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.08em] !text-white/40">
                 Core database
               </p>
-              <p className="mt-1 text-sm font-semibold tracking-[-0.01em] text-white/84">
+              <p className="mt-1 text-sm font-semibold tracking-[-0.01em] !text-white/88">
                 Product ops board
               </p>
             </div>
@@ -230,7 +230,7 @@ function WorkspacePanel() {
         </div>
 
         <div className="rounded-[22px] border border-white/[0.08] bg-[#202020] p-4 shadow-[0_16px_28px_rgba(0,0,0,0.2)]">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/36">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] !text-white/40">
             Action queue
           </p>
           <div className="mt-3 space-y-2.5">
@@ -242,7 +242,7 @@ function WorkspacePanel() {
                 <span className="grid h-6 w-6 place-items-center rounded-full border border-white/[0.1] bg-white/[0.065] text-[10px] font-semibold uppercase text-white/65">
                   OK
                 </span>
-                <span className="text-sm font-medium text-white/74">{item}</span>
+                <span className="text-sm font-medium !text-white/70">{item}</span>
               </div>
             ))}
           </div>
@@ -258,10 +258,10 @@ function AutomationPanel() {
         <div className="rounded-[22px] border border-white/[0.08] bg-[#202020] p-4 shadow-[0_16px_28px_rgba(0,0,0,0.2)]">
           <div className="flex items-center justify-between gap-3">
             <div>
-              <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/36">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.08em] !text-white/40">
                 Automation map
               </p>
-              <p className="mt-1 text-sm font-semibold tracking-[-0.01em] text-white/84">
+              <p className="mt-1 text-sm font-semibold tracking-[-0.01em] !text-white/88">
                 Lead intake to delivery handoff
               </p>
             </div>
@@ -275,10 +275,10 @@ function AutomationPanel() {
               className="relative rounded-[18px] border border-white/[0.08] bg-[#252525] p-4"
             >
               <StatusPill>{`Step ${index + 1}`}</StatusPill>
-              <h3 className="mt-3 text-base font-semibold tracking-[-0.02em] text-white/86">
+              <h3 className="mt-3 text-base font-semibold tracking-[-0.02em] !text-white/88">
                 {step.title}
               </h3>
-              <p className="mt-2 text-sm leading-6 text-white/56">{step.meta}</p>
+              <p className="mt-2 text-sm leading-6 !text-white/60">{step.meta}</p>
               <div className="mt-4 inline-flex rounded-full border border-white/[0.1] bg-white/[0.055] px-3 py-1 text-[11px] font-medium text-white/60">
                 {step.status}
               </div>
@@ -292,7 +292,7 @@ function AutomationPanel() {
 
       <div className="grid gap-3 xl:grid-cols-[minmax(0,1fr)_220px]">
         <div className="rounded-[22px] border border-white/[0.08] bg-[#202020] p-4 shadow-[0_16px_28px_rgba(0,0,0,0.2)]">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/36">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] !text-white/40">
             Safeguards
           </p>
           <div className="mt-3 space-y-2.5">
@@ -303,7 +303,7 @@ function AutomationPanel() {
             ].map((item) => (
               <div
                 key={item}
-                className="rounded-[16px] border border-white/[0.08] bg-white/[0.045] px-4 py-3 text-sm leading-6 text-white/58"
+                className="rounded-[16px] border border-white/[0.08] bg-white/[0.045] px-4 py-3 text-sm leading-6 !text-white/60"
               >
                 {item}
               </div>
@@ -312,7 +312,7 @@ function AutomationPanel() {
         </div>
 
         <div className="rounded-[22px] border border-white/[0.08] bg-[#202020] p-4 shadow-[0_16px_28px_rgba(0,0,0,0.2)]">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/36">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] !text-white/40">
             Status
           </p>
           <div className="mt-3 space-y-2.5">
@@ -345,10 +345,10 @@ function InsightsPanel() {
             key={metric.label}
             className="rounded-[20px] border border-white/[0.08] bg-[#252525] px-4 py-4 shadow-[0_16px_28px_rgba(0,0,0,0.18)]"
           >
-            <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/36">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.08em] !text-white/40">
               {metric.label}
             </p>
-            <p className="mt-3 text-2xl font-semibold tracking-[-0.05em] text-white/84">
+            <p className="mt-3 text-2xl font-semibold tracking-[-0.05em] !text-white/88">
               {metric.value}
             </p>
           </div>
@@ -359,10 +359,10 @@ function InsightsPanel() {
         <div className="rounded-[22px] border border-white/[0.08] bg-[#202020] p-4 shadow-[0_16px_28px_rgba(0,0,0,0.2)]">
           <div className="flex items-center justify-between gap-3">
             <div>
-              <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/36">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.08em] !text-white/40">
                 Recommendations
               </p>
-              <p className="mt-1 text-sm font-semibold tracking-[-0.01em] text-white/84">
+              <p className="mt-1 text-sm font-semibold tracking-[-0.01em] !text-white/88">
                 Next moves for the workspace
               </p>
             </div>
@@ -377,7 +377,7 @@ function InsightsPanel() {
             ].map((item) => (
               <div
                 key={item}
-                className="rounded-[16px] border border-white/[0.08] bg-white/[0.045] px-4 py-3 text-sm leading-6 text-white/58"
+                className="rounded-[16px] border border-white/[0.08] bg-white/[0.045] px-4 py-3 text-sm leading-6 !text-white/60"
               >
                 {item}
               </div>
@@ -386,7 +386,7 @@ function InsightsPanel() {
         </div>
 
         <div className="rounded-[22px] border border-white/[0.08] bg-[#202020] p-4 shadow-[0_16px_28px_rgba(0,0,0,0.2)]">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/36">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] !text-white/40">
             Highlights
           </p>
           <div className="mt-3 space-y-2.5">
@@ -399,8 +399,8 @@ function InsightsPanel() {
                 key={title}
                 className="rounded-[16px] border border-white/[0.08] bg-white/[0.045] px-3 py-3"
               >
-                <p className="text-sm font-semibold text-white/80">{title}</p>
-                <p className="mt-1 text-sm leading-6 text-white/56">{copy}</p>
+                <p className="text-sm font-semibold !text-white/88">{title}</p>
+                <p className="mt-1 text-sm leading-6 !text-white/60">{copy}</p>
               </div>
             ))}
           </div>
@@ -476,14 +476,14 @@ export default function NotionWorkspaceDemo() {
 
   return (
     <div
-      className="relative h-[420px] w-full sm:h-[460px] lg:h-[520px]"
+      className="notion-workspace-demo relative h-[420px] w-full sm:h-[460px] lg:h-[520px]"
       style={{
         fontFamily:
           '"Inter", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif',
       }}
     >
       <div className="absolute inset-0">
-        <div className="flex h-full flex-col overflow-hidden rounded-[24px] border border-white/[0.1] bg-[#191919] text-white/70 shadow-[0_30px_80px_rgba(0,0,0,0.42)]">
+        <div className="flex h-full flex-col overflow-hidden rounded-[24px] border border-white/[0.1] bg-[#191919] text-white/72 shadow-[0_30px_80px_rgba(0,0,0,0.42)]">
           <div className="flex h-12 items-center gap-3 border-b border-white/[0.08] bg-[#202020] px-4">
             <div className="flex items-center gap-2">
               <span className="h-3 w-3 rounded-full bg-[#ff5f57]" />
@@ -520,9 +520,9 @@ export default function NotionWorkspaceDemo() {
           </div>
 
           <div className="grid min-h-0 flex-1 grid-cols-[136px_minmax(0,1fr)] gap-3 p-3 sm:grid-cols-[156px_minmax(0,1fr)] sm:p-4 lg:grid-cols-[176px_minmax(0,1fr)_188px]">
-            <aside className="flex min-h-0 flex-col rounded-[20px] border border-white/[0.08] bg-[#202020] px-2.5 pb-2.5 pt-2">
+            <aside className="flex min-h-0 flex-col rounded-[20px] border border-white/[0.08] bg-[#202020] px-2.5 pb-2.5 pt-2 text-white/72">
               <div className="px-1.5">
-                <p className="text-[11px] font-medium leading-none text-white/38">Private</p>
+                <p className="text-[11px] font-medium leading-none !text-white/40">Private</p>
               </div>
 
               <nav
@@ -557,22 +557,22 @@ export default function NotionWorkspaceDemo() {
               </nav>
 
               <div className="mt-3 border-t border-white/[0.08] px-2 pt-3">
-                <div className="rounded-md px-2 py-1.5 text-xs text-white/36">
+                <div className="rounded-md px-2 py-1.5 text-xs !text-white/40">
                   {activeSystem.menu.length} pages
                 </div>
               </div>
             </aside>
 
-            <div className="flex min-h-0 flex-col rounded-[20px] border border-white/[0.08] bg-[#191919] p-3 text-white/70 sm:p-4">
+            <div className="flex min-h-0 flex-col rounded-[20px] border border-white/[0.08] bg-[#191919] p-3 text-white/72 sm:p-4">
             <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.08] pb-3">
               <div>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/40">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.08em] !text-white/40">
                   A workspace built around your team
                 </p>
-                  <p className="mt-1 text-lg font-semibold tracking-[-0.04em] text-white/88">
+                  <p className="mt-1 text-lg font-semibold tracking-[-0.04em] !text-white/88">
                     {activeMeta.title}
                   </p>
-                  <p className="mt-1 text-sm text-white/60">{activeMeta.detail}</p>
+                  <p className="mt-1 text-sm !text-white/62">{activeMeta.detail}</p>
                 </div>
 
                 <div className="flex flex-wrap items-center gap-2">
@@ -608,7 +608,7 @@ export default function NotionWorkspaceDemo() {
                     animate={{ opacity: 1, x: 0, y: 0 }}
                     exit={reduceMotion ? { opacity: 1 } : { opacity: 0, x: -12, y: -8 }}
                     transition={transition}
-                    className="h-full overflow-auto pr-1 text-white/70"
+                    className="h-full overflow-auto pr-1 text-white/72"
                   >
                     <DemoContent view={activeView} />
                   </motion.div>
@@ -616,8 +616,8 @@ export default function NotionWorkspaceDemo() {
               </div>
             </div>
 
-            <aside className="hidden min-h-0 flex-col rounded-[20px] border border-white/[0.08] bg-[#202020] p-3 lg:flex">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/36">
+            <aside className="hidden min-h-0 flex-col rounded-[20px] border border-white/[0.08] bg-[#202020] p-3 text-white/72 lg:flex">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] !text-white/40">
                 Assistant
               </p>
               <div className="mt-3 space-y-2.5">
@@ -631,7 +631,7 @@ export default function NotionWorkspaceDemo() {
                     initial={reduceMotion ? false : { opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={reduceMotion ? { duration: 0 } : { ...transition, delay: index * 0.05 }}
-                    className="rounded-[16px] border border-white/[0.08] bg-white/[0.045] px-3 py-3 text-sm leading-6 text-white/68 shadow-[0_10px_20px_rgba(0,0,0,0.16)]"
+                    className="rounded-[16px] border border-white/[0.08] bg-white/[0.045] px-3 py-3 text-sm leading-6 !text-white/70 shadow-[0_10px_20px_rgba(0,0,0,0.16)]"
                   >
                     {item}
                   </motion.div>
@@ -639,10 +639,10 @@ export default function NotionWorkspaceDemo() {
               </div>
 
               <div className="mt-auto rounded-[16px] border border-white/[0.08] bg-white/[0.045] p-3">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/36">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] !text-white/40">
                   Quick note
                 </p>
-                <p className="mt-2 text-sm leading-6 text-white/56">
+                <p className="mt-2 text-sm leading-6 !text-white/58">
                   Navigation swaps the active workspace state without changing the hero layout.
                 </p>
               </div>
@@ -650,6 +650,38 @@ export default function NotionWorkspaceDemo() {
           </div>
         </div>
         <style jsx>{`
+          :global(.notion-workspace-demo) {
+            color: rgba(255, 255, 255, 0.72);
+          }
+
+          :global(.notion-workspace-demo p),
+          :global(.notion-workspace-demo h1),
+          :global(.notion-workspace-demo h2),
+          :global(.notion-workspace-demo h3),
+          :global(.notion-workspace-demo h4),
+          :global(.notion-workspace-demo h5),
+          :global(.notion-workspace-demo h6),
+          :global(.notion-workspace-demo span),
+          :global(.notion-workspace-demo li),
+          :global(.notion-workspace-demo dt),
+          :global(.notion-workspace-demo dd),
+          :global(.notion-workspace-demo button) {
+            color: inherit;
+          }
+
+          :global(.notion-workspace-demo p),
+          :global(.notion-workspace-demo h1),
+          :global(.notion-workspace-demo h2),
+          :global(.notion-workspace-demo h3),
+          :global(.notion-workspace-demo h4),
+          :global(.notion-workspace-demo h5),
+          :global(.notion-workspace-demo h6),
+          :global(.notion-workspace-demo li),
+          :global(.notion-workspace-demo dt),
+          :global(.notion-workspace-demo dd) {
+            color: inherit !important;
+          }
+
           .typewriter-cursor {
             animation: typewriter-blink 1s steps(1, end) infinite;
           }

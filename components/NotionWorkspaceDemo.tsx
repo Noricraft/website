@@ -394,7 +394,7 @@ export default function NotionWorkspaceDemo() {
         setIsDeletingTitle(false);
         setTitleIndex((currentIndex) => (currentIndex + 1) % OS_TITLE_PREFIXES.length);
       },
-      isHolding ? 1400 : isDeleting ? 40 : 65,
+      isHolding ? 3000 : isDeleting ? 40 : 65,
     );
 
     return () => window.clearTimeout(timeout);
@@ -437,14 +437,14 @@ export default function NotionWorkspaceDemo() {
               <div className="grid h-7 w-7 place-items-center rounded-lg border border-white/[0.08] bg-white/[0.04] font-serif text-[11px] font-semibold text-white/72 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
                 N
               </div>
-              <span className="inline-flex min-w-0 items-center text-sm font-medium text-white/76">
-                <span className="inline-block min-w-[116px] sm:min-w-[136px]">
-                  {reduceMotion ? activeTitlePrefix : typedTitle}
+              <span className="inline-flex min-w-[164px] items-center text-sm font-medium text-white/76 sm:min-w-[192px]">
+                <span className="inline-flex items-center whitespace-nowrap">
+                  <span>{reduceMotion ? activeTitlePrefix : typedTitle}</span>
+                  {!reduceMotion ? (
+                    <span aria-hidden="true" className="mx-0.5 h-4 w-px animate-pulse bg-white/60" />
+                  ) : null}
+                  <span className="ml-1 text-white/52">OS</span>
                 </span>
-                {!reduceMotion ? (
-                  <span aria-hidden="true" className="mx-0.5 h-4 w-px animate-pulse bg-white/60" />
-                ) : null}
-                <span className="text-white/52">OS</span>
               </span>
             </div>
 

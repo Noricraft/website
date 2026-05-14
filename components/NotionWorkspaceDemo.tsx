@@ -532,8 +532,8 @@ export default function NotionWorkspaceDemo() {
       ? "border-black/[0.08] bg-white text-black/55 transition-colors duration-200"
       : "border-white/[0.1] bg-white/[0.06] text-white/55 transition-colors duration-200",
     themeButton: isLightTheme
-      ? "border-black/[0.08] bg-white text-black/60 hover:bg-black/[0.04] transition-colors duration-200"
-      : "border-white/[0.08] bg-white/[0.03] text-white/58 hover:bg-white/[0.06] transition-colors duration-200",
+      ? "text-black/58 hover:text-black/78 transition-colors duration-200"
+      : "text-white/58 hover:text-white/78 transition-colors duration-200",
     sidebar: isLightTheme
       ? "border-black/[0.08] bg-[#f1f1ef] text-black/72 transition-colors duration-200"
       : "border-white/[0.08] bg-[#202020] text-white/72 transition-colors duration-200",
@@ -642,7 +642,7 @@ export default function NotionWorkspaceDemo() {
                 onClick={() =>
                   setPanelTheme((current) => (current === "dark" ? "light" : "dark"))
                 }
-                className={`ml-3 grid h-6 w-6 place-items-center rounded-md border transition hover:scale-[1.03] active:scale-95 ${themeClasses.themeButton}`}
+                className={`ml-3 grid h-6 w-6 place-items-center transition-colors duration-200 ${themeClasses.themeButton}`}
               >
                 {isLightTheme ? (
                   <svg

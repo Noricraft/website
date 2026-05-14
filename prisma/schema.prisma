@@ -1,0 +1,53 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String   @id @default(uuid())
+  shopifyCustomerId String   @unique
+  email             String?
+  name              String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  lastLoginAt       DateTime
+}
+
+model PurchasedOrder {
+  id                String                   @id @default(cuid())
+  shopifyOrderId    String                   @unique
+  shopifyCustomerId String?
+  customerEmail     String?
+  purchasedAt       DateTime
+  createdAt         DateTime                 @default(now())
+  updatedAt         DateTime                 @updatedAt
+  lineItems         PurchasedOrderLineItem[]
+
+  @@index([shopifyCustomerId])
+  @@index([customerEmail])
+  @@index([purchasedAt])
+}
+
+model PurchasedOrderLineItem {
+  id                String         @id @default(cuid())
+  purchasedOrderId  String
+  purchasedOrder    PurchasedOrder @relation(fields: [purchasedOrderId], references: [id], onDelete: Cascade)
+  shopifyLineItemId String?
+  shopifyProductId  String?
+  shopifyVariantId  String?
+  productHandle     String?
+  productTitle      String
+  variantTitle      String?
+  quantity          Int            @default(1)
+  lineTotalAmount   String?
+  currencyCode      String?
+  createdAt         DateTime       @default(now())
+
+  @@index([purchasedOrderId])
+  @@index([shopifyProductId])
+  @@index([productHandle])
+}

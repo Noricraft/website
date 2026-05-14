@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 type DemoView = "workspace" | "automation" | "insights";
 
@@ -54,6 +54,15 @@ const INSIGHT_METRICS = [
   { label: "Hours saved", value: "19.4h" },
   { label: "Tasks automated", value: "42" },
   { label: "Approval speed", value: "+28%" },
+];
+
+const OS_TITLE_PREFIXES = [
+  "Travel",
+  "Study",
+  "Job Hunting",
+  "Daily Tracker",
+  "Gym Progress",
+  "Gym Trainer",
 ];
 
 function getTransition(shouldReduceMotion: boolean) {
@@ -109,7 +118,7 @@ function WorkspacePanel() {
             className="rounded-[20px] border border-white/[0.08] bg-[#151821] px-4 py-4 shadow-[0_16px_28px_rgba(0,0,0,0.18)]"
           >
             <StatusPill>Page</StatusPill>
-            <h3 className="mt-3 text-base font-semibold tracking-[-0.03em] text-white/88">
+            <h3 className="mt-3 text-base font-semibold tracking-[-0.02em] text-white/88">
               {card.title}
             </h3>
             <p className="mt-2 text-sm leading-6 text-white/58">{card.detail}</p>
@@ -121,10 +130,10 @@ function WorkspacePanel() {
         <div className="rounded-[22px] border border-white/[0.08] bg-[#111217] p-4 shadow-[0_16px_28px_rgba(0,0,0,0.2)]">
           <div className="flex items-center justify-between gap-3">
             <div>
-              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/35">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/35">
                 Core database
               </p>
-              <p className="mt-1 text-sm font-semibold tracking-[-0.02em] text-white/84">
+              <p className="mt-1 text-sm font-semibold tracking-[-0.01em] text-white/84">
                 Product ops board
               </p>
             </div>
@@ -132,7 +141,7 @@ function WorkspacePanel() {
           </div>
 
           <div className="mt-4 overflow-hidden rounded-[18px] border border-white/[0.08] bg-[#0d0f14]">
-            <div className="grid grid-cols-[minmax(0,1.8fr)_88px_92px] border-b border-white/[0.08] bg-white/[0.04] px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/36">
+            <div className="grid grid-cols-[minmax(0,1.8fr)_88px_92px] border-b border-white/[0.08] bg-white/[0.04] px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.08em] text-white/36">
               <span>Item</span>
               <span>Owner</span>
               <span>Status</span>
@@ -153,7 +162,7 @@ function WorkspacePanel() {
         </div>
 
         <div className="rounded-[22px] border border-white/[0.08] bg-[#0f1117] p-4 shadow-[0_16px_28px_rgba(0,0,0,0.2)]">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/35">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/35">
             Action queue
           </p>
           <div className="mt-3 space-y-2.5">
@@ -178,16 +187,16 @@ function WorkspacePanel() {
 function AutomationPanel() {
   return (
     <div className="space-y-3.5">
-      <div className="rounded-[22px] border border-white/[0.08] bg-[#111217] p-4 shadow-[0_16px_28px_rgba(0,0,0,0.2)]">
-        <div className="flex items-center justify-between gap-3">
-          <div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/35">
-              Automation map
-            </p>
-            <p className="mt-1 text-sm font-semibold tracking-[-0.02em] text-white/84">
-              Lead intake to delivery handoff
-            </p>
-          </div>
+        <div className="rounded-[22px] border border-white/[0.08] bg-[#111217] p-4 shadow-[0_16px_28px_rgba(0,0,0,0.2)]">
+          <div className="flex items-center justify-between gap-3">
+            <div>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/35">
+                Automation map
+              </p>
+              <p className="mt-1 text-sm font-semibold tracking-[-0.01em] text-white/84">
+                Lead intake to delivery handoff
+              </p>
+            </div>
           <StatusPill>System healthy</StatusPill>
         </div>
 
@@ -198,7 +207,7 @@ function AutomationPanel() {
               className="relative rounded-[18px] border border-white/[0.08] bg-[#151821] p-4"
             >
               <StatusPill>{`Step ${index + 1}`}</StatusPill>
-              <h3 className="mt-3 text-base font-semibold tracking-[-0.03em] text-white/86">
+              <h3 className="mt-3 text-base font-semibold tracking-[-0.02em] text-white/86">
                 {step.title}
               </h3>
               <p className="mt-2 text-sm leading-6 text-white/56">{step.meta}</p>
@@ -215,7 +224,7 @@ function AutomationPanel() {
 
       <div className="grid gap-3 xl:grid-cols-[minmax(0,1fr)_220px]">
         <div className="rounded-[22px] border border-white/[0.08] bg-[#0f1117] p-4 shadow-[0_16px_28px_rgba(0,0,0,0.2)]">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/35">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/35">
             Safeguards
           </p>
           <div className="mt-3 space-y-2.5">
@@ -235,7 +244,7 @@ function AutomationPanel() {
         </div>
 
         <div className="rounded-[22px] border border-white/[0.08] bg-[#111217] p-4 shadow-[0_16px_28px_rgba(0,0,0,0.2)]">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/35">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/35">
             Status
           </p>
           <div className="mt-3 space-y-2.5">
@@ -268,7 +277,7 @@ function InsightsPanel() {
             key={metric.label}
             className="rounded-[20px] border border-white/[0.08] bg-[#151821] px-4 py-4 shadow-[0_16px_28px_rgba(0,0,0,0.18)]"
           >
-            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/35">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/35">
               {metric.label}
             </p>
             <p className="mt-3 text-2xl font-semibold tracking-[-0.05em] text-white/84">
@@ -282,10 +291,10 @@ function InsightsPanel() {
         <div className="rounded-[22px] border border-white/[0.08] bg-[#111217] p-4 shadow-[0_16px_28px_rgba(0,0,0,0.2)]">
           <div className="flex items-center justify-between gap-3">
             <div>
-              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/35">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/35">
                 Recommendations
               </p>
-              <p className="mt-1 text-sm font-semibold tracking-[-0.02em] text-white/84">
+              <p className="mt-1 text-sm font-semibold tracking-[-0.01em] text-white/84">
                 Next moves for the workspace
               </p>
             </div>
@@ -309,7 +318,7 @@ function InsightsPanel() {
         </div>
 
         <div className="rounded-[22px] border border-white/[0.08] bg-[#0f1117] p-4 shadow-[0_16px_28px_rgba(0,0,0,0.2)]">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/35">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/35">
             Highlights
           </p>
           <div className="mt-3 space-y-2.5">
@@ -349,11 +358,56 @@ export default function NotionWorkspaceDemo() {
   const shouldReduceMotion = useReducedMotion();
   const reduceMotion = Boolean(shouldReduceMotion);
   const [activeView, setActiveView] = useState<DemoView>("workspace");
+  const [titleIndex, setTitleIndex] = useState(0);
+  const [typedTitle, setTypedTitle] = useState("");
+  const [isDeletingTitle, setIsDeletingTitle] = useState(false);
   const transition = useMemo(() => getTransition(reduceMotion), [reduceMotion]);
   const activeMeta = useMemo(() => getViewMeta(activeView), [activeView]);
+  const activeTitlePrefix = OS_TITLE_PREFIXES[titleIndex] ?? OS_TITLE_PREFIXES[0];
+
+  useEffect(() => {
+    if (reduceMotion) {
+      return;
+    }
+
+    const isTyping = typedTitle.length < activeTitlePrefix.length && !isDeletingTitle;
+    const isHolding = typedTitle === activeTitlePrefix && !isDeletingTitle;
+    const isDeleting = typedTitle.length > 0 && isDeletingTitle;
+
+    const timeout = window.setTimeout(
+      () => {
+        if (isTyping) {
+          setTypedTitle(activeTitlePrefix.slice(0, typedTitle.length + 1));
+          return;
+        }
+
+        if (isHolding) {
+          setIsDeletingTitle(true);
+          return;
+        }
+
+        if (isDeleting) {
+          setTypedTitle(activeTitlePrefix.slice(0, typedTitle.length - 1));
+          return;
+        }
+
+        setIsDeletingTitle(false);
+        setTitleIndex((currentIndex) => (currentIndex + 1) % OS_TITLE_PREFIXES.length);
+      },
+      isHolding ? 1400 : isDeleting ? 40 : 65,
+    );
+
+    return () => window.clearTimeout(timeout);
+  }, [activeTitlePrefix, isDeletingTitle, reduceMotion, typedTitle]);
 
   return (
-    <div className="group relative h-[420px] w-full overflow-hidden rounded-[28px] border border-white/10 bg-[#0b0b0f] shadow-[0_30px_80px_rgba(0,0,0,0.45)] transition-shadow duration-300 hover:shadow-[0_36px_96px_rgba(0,0,0,0.52)] sm:h-[460px] lg:h-[520px]">
+    <div
+      className="group relative h-[420px] w-full overflow-hidden rounded-[28px] border border-white/10 bg-[#0b0b0f] shadow-[0_30px_80px_rgba(0,0,0,0.45)] transition-shadow duration-300 hover:shadow-[0_36px_96px_rgba(0,0,0,0.52)] sm:h-[460px] lg:h-[520px]"
+      style={{
+        fontFamily:
+          '"Inter", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif',
+      }}
+    >
       <div
         className="absolute inset-0"
         style={{
@@ -380,10 +434,18 @@ export default function NotionWorkspaceDemo() {
             </div>
 
             <div className="hidden items-center gap-2 sm:flex">
-              <div className="grid h-7 w-7 place-items-center rounded-lg border border-white/[0.08] bg-white/[0.04] text-[10px] font-semibold uppercase tracking-[0.12em] text-white/62">
+              <div className="grid h-7 w-7 place-items-center rounded-lg border border-white/[0.08] bg-white/[0.04] font-serif text-[11px] font-semibold text-white/72 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
                 N
               </div>
-              <span className="text-sm font-medium text-white/76">Noricraft OS</span>
+              <span className="inline-flex min-w-0 items-center text-sm font-medium text-white/76">
+                <span className="inline-block min-w-[116px] sm:min-w-[136px]">
+                  {reduceMotion ? activeTitlePrefix : typedTitle}
+                </span>
+                {!reduceMotion ? (
+                  <span aria-hidden="true" className="mx-0.5 h-4 w-px animate-pulse bg-white/60" />
+                ) : null}
+                <span className="text-white/52">OS</span>
+              </span>
             </div>
 
             <div className="ml-auto flex min-w-0 items-center gap-2">
@@ -399,10 +461,10 @@ export default function NotionWorkspaceDemo() {
           <div className="grid min-h-0 flex-1 grid-cols-[136px_minmax(0,1fr)] gap-3 p-3 sm:grid-cols-[156px_minmax(0,1fr)] sm:p-4 lg:grid-cols-[176px_minmax(0,1fr)_188px]">
             <aside className="flex min-h-0 flex-col rounded-[20px] border border-white/[0.08] bg-[#0f1117] p-3">
               <div>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/34">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/34">
                   Workspace
                 </p>
-                <p className="mt-1 text-sm font-semibold tracking-[-0.03em] text-white/82">
+                <p className="mt-1 text-sm font-semibold tracking-[-0.01em] text-white/82">
                   Desktop system
                 </p>
               </div>
@@ -422,17 +484,17 @@ export default function NotionWorkspaceDemo() {
                         isActive
                           ? "border-[#2f6fed]/40 bg-[#102033] text-white"
                           : "border-transparent bg-transparent text-white/72 hover:border-white/[0.08] hover:bg-white/[0.04]"
-                      }`}
-                    >
-                      {isActive ? (
-                        <motion.div
+                    }`}
+                  >
+                    {isActive ? (
+                      <motion.div
                           aria-hidden="true"
                           className="absolute inset-0 rounded-[16px] bg-[linear-gradient(135deg,rgba(47,111,237,0.16),rgba(78,52,129,0.12))] ring-1 ring-[#2f6fed]/30"
                           layoutId="active-nav-item"
-                          transition={transition}
-                        />
-                      ) : null}
-                      <div className="relative z-10 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/36">
+                        transition={transition}
+                      />
+                    ) : null}
+                      <div className="relative z-10 text-[10px] font-semibold uppercase tracking-[0.08em] text-white/36">
                         {item.eyebrow}
                       </div>
                       <div className="relative z-10 mt-1 text-sm font-semibold tracking-[-0.02em] text-current">
@@ -457,11 +519,11 @@ export default function NotionWorkspaceDemo() {
             </aside>
 
             <div className="flex min-h-0 flex-col rounded-[20px] border border-white/[0.08] bg-[#111217] p-3 sm:p-4">
-              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.08] pb-3">
-                <div>
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/34">
-                    A workspace built around your team
-                  </p>
+            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.08] pb-3">
+              <div>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/34">
+                  A workspace built around your team
+                </p>
                   <p className="mt-1 text-lg font-semibold tracking-[-0.04em] text-white/86">
                     {activeMeta.title}
                   </p>

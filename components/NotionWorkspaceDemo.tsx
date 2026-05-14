@@ -531,22 +531,25 @@ export default function NotionWorkspaceDemo() {
           </div>
 
           <div className="grid min-h-0 flex-1 grid-cols-[136px_minmax(0,1fr)] gap-3 p-3 sm:grid-cols-[156px_minmax(0,1fr)] sm:p-4 lg:grid-cols-[176px_minmax(0,1fr)_188px]">
-            <aside className="flex min-h-0 flex-col rounded-[20px] border border-white/[0.08] bg-[#0f1117] px-2.5 py-3">
-              <div className="px-2">
-                <p className="text-[11px] font-medium text-white/38">Private</p>
+            <aside className="flex min-h-0 flex-col rounded-[20px] border border-white/[0.08] bg-[#0f1117] px-2.5 pb-2.5 pt-2">
+              <div className="px-1.5">
+                <p className="text-[11px] font-medium leading-none text-white/38">Private</p>
               </div>
 
               <nav
-                className="mt-2 min-h-0 flex-1 space-y-0.5 overflow-auto"
+                className="mt-1 min-h-0 flex-1 space-y-0.5 overflow-auto"
                 aria-label={`${activeSystem.title} menu`}
               >
                 {activeSystem.menu.map((item, index) => {
                   const isActive = index === 0;
 
                   return (
-                    <div
+                    <button
                       key={`${activeSystem.title}-${item.label}`}
-                      className={`flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-left text-sm font-medium transition ${
+                      type="button"
+                      aria-current={isActive ? "page" : undefined}
+                      aria-label={`Open ${item.label}`}
+                      className={`flex w-full cursor-pointer appearance-none items-center gap-2 rounded-md border-0 px-2 py-1.5 text-left text-sm font-medium transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-white/30 ${
                         isActive
                           ? "bg-white/[0.08] text-white/88"
                           : "text-white/58 hover:bg-white/[0.045] hover:text-white/78"
@@ -558,7 +561,7 @@ export default function NotionWorkspaceDemo() {
                       <span className="min-w-0 truncate">
                         {item.label}
                       </span>
-                    </div>
+                    </button>
                   );
                 })}
               </nav>

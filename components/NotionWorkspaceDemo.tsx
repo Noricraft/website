@@ -427,12 +427,17 @@ export default function NotionWorkspaceDemo() {
   const reduceMotion = Boolean(shouldReduceMotion);
   const [activeView, setActiveView] = useState<DemoView>("workspace");
   const [titleIndex, setTitleIndex] = useState(0);
+  const [activeMenuItem, setActiveMenuItem] = useState("");
   const [typedTitle, setTypedTitle] = useState("");
   const [isDeletingTitle, setIsDeletingTitle] = useState(false);
   const transition = useMemo(() => getTransition(reduceMotion), [reduceMotion]);
   const activeMeta = useMemo(() => getViewMeta(activeView), [activeView]);
   const activeSystem = OS_SYSTEMS[titleIndex] ?? OS_SYSTEMS[0];
   const activeTitlePrefix = activeSystem.title;
+  const activeMenuKeyPrefix = `${activeSystem.title}::`;
+  const activeMenuLabel = activeMenuItem.startsWith(activeMenuKeyPrefix)
+    ? activeMenuItem.slice(activeMenuKeyPrefix.length)
+    : activeSystem.menu[0]?.label || "";
 
   useEffect(() => {
     if (reduceMotion) {
@@ -540,8 +545,8 @@ export default function NotionWorkspaceDemo() {
                 className="mt-1 min-h-0 flex-1 space-y-0.5 overflow-auto"
                 aria-label={`${activeSystem.title} menu`}
               >
-                {activeSystem.menu.map((item, index) => {
-                  const isActive = index === 0;
+                {activeSystem.menu.map((item) => {
+                  const isActive = activeMenuLabel === item.label;
 
                   return (
                     <button
@@ -549,7 +554,8 @@ export default function NotionWorkspaceDemo() {
                       type="button"
                       aria-current={isActive ? "page" : undefined}
                       aria-label={`Open ${item.label}`}
-                      className={`flex w-full cursor-pointer appearance-none items-center gap-2 rounded-md border-0 px-2 py-1.5 text-left text-sm font-medium transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-white/30 ${
+                      onClick={() => setActiveMenuItem(`${activeSystem.title}::${item.label}`)}
+                      className={`flex w-full cursor-pointer appearance-none items-center gap-2 rounded-md border-0 px-2 py-1.5 text-left text-sm font-medium transition active:bg-white/[0.075] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-white/30 ${
                         isActive
                           ? "bg-white/[0.08] text-white/88"
                           : "text-white/58 hover:bg-white/[0.045] hover:text-white/78"

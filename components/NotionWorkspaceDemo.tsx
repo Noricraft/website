@@ -8,19 +8,22 @@ type DemoView = "workspace" | "automation" | "insights";
 type NavItem = {
   id: DemoView;
   label: string;
-  eyebrow: string;
+};
+
+type OsMenuItem = {
+  label: string;
+  emoji: string;
+};
+
+type OsSystem = {
+  title: string;
+  menu: OsMenuItem[];
 };
 
 const NAV_ITEMS: NavItem[] = [
-  { id: "workspace", label: "Workspace", eyebrow: "Overview" },
-  { id: "automation", label: "Automation", eyebrow: "Flows" },
-  { id: "insights", label: "Insights", eyebrow: "Review" },
-];
-
-const SECONDARY_ITEMS = [
-  { label: "Pages", value: "12" },
-  { label: "Templates", value: "08" },
-  { label: "Automations", value: "05" },
+  { id: "workspace", label: "Workspace" },
+  { id: "automation", label: "Automation" },
+  { id: "insights", label: "Insights" },
 ];
 
 const WORKSPACE_CARDS = [
@@ -56,13 +59,78 @@ const INSIGHT_METRICS = [
   { label: "Approval speed", value: "+28%" },
 ];
 
-const OS_TITLE_PREFIXES = [
-  "Travel",
-  "Study",
-  "Job Hunting",
-  "Daily Tracker",
-  "Gym Progress",
-  "Gym Trainer",
+const OS_SYSTEMS: OsSystem[] = [
+  {
+    title: "Travel",
+    menu: [
+      { emoji: "✅", label: "Task" },
+      { emoji: "🧳", label: "Travels" },
+      { emoji: "📔", label: "Journal" },
+      { emoji: "🌍", label: "Country base" },
+      { emoji: "🎒", label: "Packing" },
+      { emoji: "💸", label: "Budget" },
+    ],
+  },
+  {
+    title: "Study",
+    menu: [
+      { emoji: "🧪", label: "Exams" },
+      { emoji: "📝", label: "Homeworks" },
+      { emoji: "📁", label: "Projects" },
+      { emoji: "🗓️", label: "Schedule" },
+      { emoji: "📅", label: "Calendar" },
+      { emoji: "📒", label: "Notes" },
+    ],
+  },
+  {
+    title: "Job Hunting",
+    menu: [
+      { emoji: "🎯", label: "Job search plan" },
+      { emoji: "📨", label: "Applications" },
+      { emoji: "🏢", label: "Companies" },
+      { emoji: "🤝", label: "Networking" },
+      { emoji: "💬", label: "Interviews" },
+      { emoji: "📄", label: "Documents" },
+      { emoji: "🔗", label: "Resources" },
+    ],
+  },
+  {
+    title: "Daily Tracker",
+    menu: [
+      { emoji: "✅", label: "Tasks" },
+      { emoji: "💻", label: "Work" },
+      { emoji: "📁", label: "Projects" },
+      { emoji: "📒", label: "Notes" },
+      { emoji: "🌱", label: "Habits" },
+      { emoji: "🧭", label: "Purpose" },
+    ],
+  },
+  {
+    title: "Gym Progress",
+    menu: [
+      { emoji: "🎯", label: "Fitness goals" },
+      { emoji: "📋", label: "Workout plan" },
+      { emoji: "🏋️", label: "Workouts" },
+      { emoji: "📈", label: "Progress" },
+      { emoji: "📏", label: "Body measurements" },
+      { emoji: "🥗", label: "Nutrition" },
+      { emoji: "🧘", label: "Recovery" },
+      { emoji: "🔗", label: "Resources" },
+    ],
+  },
+  {
+    title: "Gym Trainer",
+    menu: [
+      { emoji: "👥", label: "Clients" },
+      { emoji: "🗓️", label: "Schedule" },
+      { emoji: "📋", label: "Training plans" },
+      { emoji: "🏋️", label: "Workouts" },
+      { emoji: "📈", label: "Client progress" },
+      { emoji: "🥗", label: "Nutrition" },
+      { emoji: "✅", label: "Check-ins" },
+      { emoji: "💳", label: "Payments" },
+    ],
+  },
 ];
 
 function getTransition(shouldReduceMotion: boolean) {
@@ -363,7 +431,8 @@ export default function NotionWorkspaceDemo() {
   const [isDeletingTitle, setIsDeletingTitle] = useState(false);
   const transition = useMemo(() => getTransition(reduceMotion), [reduceMotion]);
   const activeMeta = useMemo(() => getViewMeta(activeView), [activeView]);
-  const activeTitlePrefix = OS_TITLE_PREFIXES[titleIndex] ?? OS_TITLE_PREFIXES[0];
+  const activeSystem = OS_SYSTEMS[titleIndex] ?? OS_SYSTEMS[0];
+  const activeTitlePrefix = activeSystem.title;
 
   useEffect(() => {
     if (reduceMotion) {
@@ -392,7 +461,7 @@ export default function NotionWorkspaceDemo() {
         }
 
         setIsDeletingTitle(false);
-        setTitleIndex((currentIndex) => (currentIndex + 1) % OS_TITLE_PREFIXES.length);
+        setTitleIndex((currentIndex) => (currentIndex + 1) % OS_SYSTEMS.length);
       },
       isHolding ? 3000 : isDeleting ? 40 : 65,
     );
@@ -462,62 +531,42 @@ export default function NotionWorkspaceDemo() {
           </div>
 
           <div className="grid min-h-0 flex-1 grid-cols-[136px_minmax(0,1fr)] gap-3 p-3 sm:grid-cols-[156px_minmax(0,1fr)] sm:p-4 lg:grid-cols-[176px_minmax(0,1fr)_188px]">
-            <aside className="flex min-h-0 flex-col rounded-[20px] border border-white/[0.08] bg-[#0f1117] p-3">
-              <div>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/34">
-                  Workspace
-                </p>
-                <p className="mt-1 text-sm font-semibold tracking-[-0.01em] text-white/82">
-                  Desktop system
-                </p>
+            <aside className="flex min-h-0 flex-col rounded-[20px] border border-white/[0.08] bg-[#0f1117] px-2.5 py-3">
+              <div className="px-2">
+                <p className="text-[11px] font-medium text-white/38">Private</p>
               </div>
 
-              <div className="mt-4 space-y-2">
-                {NAV_ITEMS.map((item) => {
-                  const isActive = activeView === item.id;
+              <nav
+                className="mt-2 min-h-0 flex-1 space-y-0.5 overflow-auto"
+                aria-label={`${activeSystem.title} menu`}
+              >
+                {activeSystem.menu.map((item, index) => {
+                  const isActive = index === 0;
 
                   return (
-                    <button
-                      key={item.id}
-                      type="button"
-                      aria-label={`Open ${item.label} view`}
-                      aria-pressed={isActive}
-                      onClick={() => setActiveView(item.id)}
-                      className={`relative w-full overflow-hidden rounded-[16px] border px-3 py-3 text-left transition ${
+                    <div
+                      key={`${activeSystem.title}-${item.label}`}
+                      className={`flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-left text-sm font-medium transition ${
                         isActive
-                          ? "border-[#2f6fed]/40 bg-[#102033] text-white"
-                          : "border-transparent bg-transparent text-white/72 hover:border-white/[0.08] hover:bg-white/[0.04]"
-                    }`}
-                  >
-                    {isActive ? (
-                      <motion.div
-                          aria-hidden="true"
-                          className="absolute inset-0 rounded-[16px] bg-[linear-gradient(135deg,rgba(47,111,237,0.16),rgba(78,52,129,0.12))] ring-1 ring-[#2f6fed]/30"
-                          layoutId="active-nav-item"
-                        transition={transition}
-                      />
-                    ) : null}
-                      <div className="relative z-10 text-[10px] font-semibold uppercase tracking-[0.08em] text-white/36">
-                        {item.eyebrow}
-                      </div>
-                      <div className="relative z-10 mt-1 text-sm font-semibold tracking-[-0.02em] text-current">
+                          ? "bg-white/[0.08] text-white/88"
+                          : "text-white/58 hover:bg-white/[0.045] hover:text-white/78"
+                      }`}
+                    >
+                      <span className="grid h-5 w-5 shrink-0 place-items-center text-[13px] leading-none">
+                        {item.emoji}
+                      </span>
+                      <span className="min-w-0 truncate">
                         {item.label}
-                      </div>
-                    </button>
+                      </span>
+                    </div>
                   );
                 })}
-              </div>
+              </nav>
 
-              <div className="mt-4 space-y-2 border-t border-white/[0.08] pt-4">
-                {SECONDARY_ITEMS.map((item) => (
-                  <div
-                    key={item.label}
-                    className="flex items-center justify-between rounded-[14px] border border-white/[0.05] bg-white/[0.03] px-3 py-2.5"
-                  >
-                    <span className="text-sm text-white/50">{item.label}</span>
-                    <span className="text-sm font-semibold text-white/74">{item.value}</span>
-                  </div>
-                ))}
+              <div className="mt-3 border-t border-white/[0.08] px-2 pt-3">
+                <div className="rounded-md px-2 py-1.5 text-xs text-white/36">
+                  {activeSystem.menu.length} pages
+                </div>
               </div>
             </aside>
 

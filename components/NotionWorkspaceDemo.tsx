@@ -483,7 +483,7 @@ export default function NotionWorkspaceDemo() {
       }}
     >
       <div className="absolute inset-0">
-        <div className="flex h-full flex-col overflow-hidden rounded-[24px] border border-white/[0.1] bg-[#191919] shadow-[0_30px_80px_rgba(0,0,0,0.42)]">
+        <div className="flex h-full flex-col overflow-hidden rounded-[24px] border border-white/[0.1] bg-[#191919] text-white/70 shadow-[0_30px_80px_rgba(0,0,0,0.42)]">
           <div className="flex h-12 items-center gap-3 border-b border-white/[0.08] bg-[#202020] px-4">
             <div className="flex items-center gap-2">
               <span className="h-3 w-3 rounded-full bg-[#ff5f57]" />
@@ -563,16 +563,16 @@ export default function NotionWorkspaceDemo() {
               </div>
             </aside>
 
-            <div className="flex min-h-0 flex-col rounded-[20px] border border-white/[0.08] bg-[#191919] p-3 sm:p-4">
+            <div className="flex min-h-0 flex-col rounded-[20px] border border-white/[0.08] bg-[#191919] p-3 text-white/70 sm:p-4">
             <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.08] pb-3">
               <div>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/36">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/40">
                   A workspace built around your team
                 </p>
-                  <p className="mt-1 text-lg font-semibold tracking-[-0.04em] text-white/86">
+                  <p className="mt-1 text-lg font-semibold tracking-[-0.04em] text-white/88">
                     {activeMeta.title}
                   </p>
-                  <p className="mt-1 text-sm text-white/55">{activeMeta.detail}</p>
+                  <p className="mt-1 text-sm text-white/60">{activeMeta.detail}</p>
                 </div>
 
                 <div className="flex flex-wrap items-center gap-2">
@@ -608,7 +608,7 @@ export default function NotionWorkspaceDemo() {
                     animate={{ opacity: 1, x: 0, y: 0 }}
                     exit={reduceMotion ? { opacity: 1 } : { opacity: 0, x: -12, y: -8 }}
                     transition={transition}
-                    className="h-full overflow-auto pr-1"
+                    className="h-full overflow-auto pr-1 text-white/70"
                   >
                     <DemoContent view={activeView} />
                   </motion.div>
@@ -631,7 +631,7 @@ export default function NotionWorkspaceDemo() {
                     initial={reduceMotion ? false : { opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={reduceMotion ? { duration: 0 } : { ...transition, delay: index * 0.05 }}
-                    className="rounded-[16px] border border-white/[0.08] bg-white/[0.045] px-3 py-3 text-sm leading-6 text-white/58 shadow-[0_10px_20px_rgba(0,0,0,0.16)]"
+                    className="rounded-[16px] border border-white/[0.08] bg-white/[0.045] px-3 py-3 text-sm leading-6 text-white/68 shadow-[0_10px_20px_rgba(0,0,0,0.16)]"
                   >
                     {item}
                   </motion.div>

@@ -90,7 +90,7 @@ export default async function Home() {
           <div className="relative left-1/2 w-screen -translate-x-1/2 px-4 md:px-6">
             <div className="mx-auto w-full max-w-[1520px]">
               <div className="hero relative w-full overflow-hidden">
-                <div className="hero-grid md:grid md:grid-cols-[1.05fr_0.95fr] md:items-center">
+                <div className="hero-grid md:grid md:grid-cols-[0.92fr_1.08fr] md:items-center">
                   <div className="hero-copy">
                     <h1 id="hero-title">Build smarter operations with Notion and AI.</h1>
                     <p className="lead">
@@ -111,7 +111,7 @@ export default async function Home() {
                     </div>
                   </div>
 
-                  <div className="relative mt-8 md:mt-0 md:-ml-4 lg:-ml-8">
+                  <div className="relative mt-8 md:mt-0 md:-ml-6 lg:-ml-10 xl:-ml-12">
                     <NotionWorkspaceDemo />
                   </div>
                 </div>

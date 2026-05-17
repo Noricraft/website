@@ -1,9 +1,8 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 
-type DemoView = "workspace" | "automation" | "insights";
 type PanelTheme = "dark" | "light";
 
 type ThemeClasses = {
@@ -17,22 +16,16 @@ type ThemeClasses = {
   content: string;
   assistant: string;
   card: string;
-  panel: string;
   subtle: string;
   tableHeader: string;
-  rowBorder: string;
-  statusBadge: string;
-  navActive: string;
-  navInactive: string;
   sidebarItemActive: string;
   sidebarItemInactive: string;
   separator: string;
   cursor: string;
-};
-
-type NavItem = {
-  id: DemoView;
-  label: string;
+  featureActive: string;
+  featureInactive: string;
+  featureTag: string;
+  featureCheck: string;
 };
 
 type OsMenuItem = {
@@ -45,43 +38,164 @@ type OsSystem = {
   menu: OsMenuItem[];
 };
 
-const NAV_ITEMS: NavItem[] = [
-  { id: "workspace", label: "Workspace" },
-  { id: "automation", label: "Automation" },
-  { id: "insights", label: "Insights" },
-];
+type TemplateFeature = {
+  id: string;
+  icon: string;
+  title: string;
+  type: string;
+  status: string;
+  summary: string;
+  detailTitle: string;
+  detail: string;
+  included: string[];
+  bestFor: string[];
+};
 
-const WORKSPACE_CARDS = [
+const TEMPLATE_FEATURES: TemplateFeature[] = [
   {
-    title: "Product Roadmap",
-    detail: "Milestones, owners, and launch blockers aligned in one system.",
+    id: "ready-dashboard",
+    icon: "🧩",
+    title: "Ready-to-use dashboard",
+    type: "Setup",
+    status: "Included",
+    summary: "Start with a complete operating system, not a blank page.",
+    detailTitle: "Launch faster with a ready dashboard",
+    detail:
+      "Noricraft templates give you a structured workspace from the first minute, so you can focus on using the system instead of designing it.",
+    included: [
+      "Pre-built main dashboard",
+      "Linked sections and quick navigation",
+      "Clean page hierarchy",
+      "Beginner-friendly layout",
+    ],
+    bestFor: ["Planning", "Study", "Fitness", "Client work"],
   },
   {
-    title: "Client Portal",
-    detail: "Shared approvals, updates, and next steps synced to the workspace.",
+    id: "connected-databases",
+    icon: "🔗",
+    title: "Connected databases",
+    type: "System",
+    status: "Included",
+    summary: "Keep pages, tasks, notes and goals connected in one system.",
+    detailTitle: "Make every page work together",
+    detail:
+      "Instead of isolated pages, the workspace uses connected databases so information can appear in the right place automatically.",
+    included: [
+      "Task and project relations",
+      "Filtered views",
+      "Status-based organization",
+      "Reusable database structure",
+    ],
+    bestFor: ["Projects", "Tasks", "Goals", "Tracking"],
   },
   {
-    title: "Content Calendar",
-    detail: "Briefs, assets, and delivery dates tracked by status.",
+    id: "daily-action",
+    icon: "✅",
+    title: "Daily action system",
+    type: "Workflow",
+    status: "Included",
+    summary: "Know what to do today without digging through your workspace.",
+    detailTitle: "Turn plans into daily action",
+    detail:
+      "A good template should help you decide what matters now. Daily views make priorities visible and reduce decision fatigue.",
+    included: [
+      "Today view",
+      "Priority sections",
+      "Quick capture area",
+      "Daily review flow",
+    ],
+    bestFor: ["Productivity", "Habits", "Work", "Study"],
   },
-];
-
-const DATABASE_ROWS = [
-  { name: "Homepage refresh", owner: "Ava", status: "Ready" },
-  { name: "Partner onboarding", owner: "Leo", status: "In review" },
-  { name: "Renewal outreach", owner: "Mina", status: "Planned" },
-];
-
-const AUTOMATION_STEPS = [
-  { title: "AI Brief", meta: "Summary generated from intake notes", status: "Done" },
-  { title: "Slack Update", meta: "Routing status to the delivery channel", status: "Running" },
-  { title: "Delivery Handoff", meta: "Assigning owner and final checklist", status: "Queued" },
-];
-
-const INSIGHT_METRICS = [
-  { label: "Hours saved", value: "19.4h" },
-  { label: "Tasks automated", value: "42" },
-  { label: "Approval speed", value: "+28%" },
+  {
+    id: "progress-tracking",
+    icon: "📈",
+    title: "Progress tracking",
+    type: "Tracking",
+    status: "Included",
+    summary: "See progress clearly across goals, tasks and routines.",
+    detailTitle: "Measure progress without extra work",
+    detail:
+      "Progress views help users understand what is moving forward, what is stuck, and what needs attention next.",
+    included: [
+      "Progress views",
+      "Status boards",
+      "Weekly overview",
+      "Completion indicators",
+    ],
+    bestFor: ["Fitness", "Learning", "Projects", "Goals"],
+  },
+  {
+    id: "clean-structure",
+    icon: "🧱",
+    title: "Clean Notion structure",
+    type: "Design",
+    status: "Included",
+    summary: "A minimal workspace that is easy to understand and maintain.",
+    detailTitle: "Stay organized without visual noise",
+    detail:
+      "Each template is designed with a clean hierarchy, simple navigation and focused pages, so the system feels calm instead of overwhelming.",
+    included: [
+      "Minimal page layout",
+      "Clear navigation",
+      "Organized sections",
+      "No unnecessary clutter",
+    ],
+    bestFor: ["Beginners", "Personal systems", "Simple workflows", "Focus"],
+  },
+  {
+    id: "reusable-workflows",
+    icon: "🔁",
+    title: "Reusable workflows",
+    type: "Process",
+    status: "Included",
+    summary: "Repeat planning, reviews and checklists without rebuilding them.",
+    detailTitle: "Use the same workflow again and again",
+    detail:
+      "Reusable structures make it easier to run weekly reviews, repeat projects, plan content or manage recurring routines.",
+    included: [
+      "Repeatable checklists",
+      "Weekly reset flow",
+      "Reusable project structure",
+      "Template-ready pages",
+    ],
+    bestFor: ["Weekly planning", "Project work", "Content", "Client workflows"],
+  },
+  {
+    id: "ai-ready",
+    icon: "⚡",
+    title: "AI-ready workspace",
+    type: "Automation",
+    status: "Included",
+    summary: "Structured pages and databases ready for automation and AI workflows.",
+    detailTitle: "Prepare your workspace for AI",
+    detail:
+      "Clean inputs and organized databases make it easier to connect AI automations, generate summaries and build smarter workflows later.",
+    included: [
+      "Structured fields",
+      "Prompt-friendly sections",
+      "Automation-ready databases",
+      "Clean source data",
+    ],
+    bestFor: ["AI workflows", "Automation", "Summaries", "Operations"],
+  },
+  {
+    id: "scalable-system",
+    icon: "🌱",
+    title: "Scalable system",
+    type: "Growth",
+    status: "Included",
+    summary: "Start simple and expand your workspace as your needs grow.",
+    detailTitle: "Build a system that grows with you",
+    detail:
+      "The workspace can start as a simple template and gradually become a full operating system for personal or business use.",
+    included: [
+      "Modular page system",
+      "Expandable databases",
+      "Flexible views",
+      "Personal and business use cases",
+    ],
+    bestFor: ["Long-term systems", "Business", "Personal growth", "Team workflows"],
+  },
 ];
 
 const OS_SYSTEMS: OsSystem[] = [
@@ -169,35 +283,11 @@ function getTransition(shouldReduceMotion: boolean) {
   };
 }
 
-function getViewMeta(view: DemoView) {
-  switch (view) {
-    case "automation":
-      return {
-        title: "Automation control center",
-        detail: "Flows, safeguards, and delivery handoffs linked to the workspace.",
-        pill: "2 active flows",
-      };
-    case "insights":
-      return {
-        title: "Insights and optimization",
-        detail: "Review what the system improved and where the next gains are hiding.",
-        pill: "AI review",
-      };
-    case "workspace":
-    default:
-      return {
-        title: "Workspace command center",
-        detail: "Pages, databases, and execution notes shaped around your team.",
-        pill: "Live sync",
-      };
-  }
-}
-
 function StatusPill({
   children,
   themeClasses,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   themeClasses: ThemeClasses;
 }) {
   return (
@@ -209,311 +299,18 @@ function StatusPill({
   );
 }
 
-function WorkspacePanel({ themeClasses }: { themeClasses: ThemeClasses }) {
-  return (
-    <div className="space-y-3.5">
-      <div className="grid gap-3 xl:grid-cols-3">
-        {WORKSPACE_CARDS.map((card) => (
-          <div
-            key={card.title}
-            className={`rounded-[20px] border px-4 py-4 shadow-[0_16px_28px_rgba(0,0,0,0.18)] ${themeClasses.card}`}
-          >
-            <StatusPill themeClasses={themeClasses}>Page</StatusPill>
-            <h3 className="theme-text-primary mt-3 text-base font-semibold tracking-[-0.02em] !text-white/88">
-              {card.title}
-            </h3>
-            <p className="theme-text-secondary mt-2 text-sm leading-6 !text-white/60">
-              {card.detail}
-            </p>
-          </div>
-        ))}
-      </div>
-
-      <div className="grid gap-3 xl:grid-cols-[minmax(0,1fr)_220px]">
-        <div
-          className={`rounded-[22px] border p-4 shadow-[0_16px_28px_rgba(0,0,0,0.2)] ${themeClasses.panel}`}
-        >
-          <div className="flex items-center justify-between gap-3">
-            <div>
-              <p className="theme-text-muted text-[10px] font-semibold uppercase tracking-[0.08em] !text-white/40">
-                Core database
-              </p>
-              <p className="theme-text-primary mt-1 text-sm font-semibold tracking-[-0.01em] !text-white/88">
-                Product ops board
-              </p>
-            </div>
-            <StatusPill themeClasses={themeClasses}>Synced</StatusPill>
-          </div>
-
-          <div className={`mt-4 overflow-hidden rounded-[18px] border ${themeClasses.subtle}`}>
-            <div
-              className={`grid grid-cols-[minmax(0,1.8fr)_88px_92px] border-b px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.08em] ${themeClasses.tableHeader}`}
-            >
-              <span className="theme-text-muted">Item</span>
-              <span className="theme-text-muted">Owner</span>
-              <span className="theme-text-muted">Status</span>
-            </div>
-            {DATABASE_ROWS.map((row) => (
-              <div
-                key={row.name}
-                className={`grid grid-cols-[minmax(0,1.8fr)_88px_92px] items-center border-b px-3 py-3 last:border-b-0 ${themeClasses.rowBorder}`}
-              >
-                <span className="theme-text-primary truncate pr-3 text-sm font-medium">
-                  {row.name}
-                </span>
-                <span className="theme-text-secondary text-sm">{row.owner}</span>
-                <span
-                  className={`inline-flex w-fit rounded-full border px-2.5 py-1 text-[11px] font-medium ${themeClasses.statusBadge}`}
-                >
-                  {row.status}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div
-          className={`rounded-[22px] border p-4 shadow-[0_16px_28px_rgba(0,0,0,0.2)] ${themeClasses.panel}`}
-        >
-          <p className="theme-text-muted text-[10px] font-semibold uppercase tracking-[0.08em] !text-white/40">
-            Action queue
-          </p>
-          <div className="mt-3 space-y-2.5">
-            {["Planning locked", "Assets attached", "Handoff ready"].map((item) => (
-              <div
-                key={item}
-                className={`flex items-center gap-3 rounded-[16px] border px-3 py-3 ${themeClasses.subtle}`}
-              >
-                <span
-                  className={`grid h-6 w-6 place-items-center rounded-full border text-[10px] font-semibold uppercase ${themeClasses.statusBadge}`}
-                >
-                  OK
-                </span>
-                <span className="theme-text-secondary text-sm font-medium !text-white/70">
-                  {item}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function AutomationPanel({
-  themeClasses,
-  isLightTheme,
-}: {
-  themeClasses: ThemeClasses;
-  isLightTheme: boolean;
-}) {
-  return (
-    <div className="space-y-3.5">
-      <div
-        className={`rounded-[22px] border p-4 shadow-[0_16px_28px_rgba(0,0,0,0.2)] ${themeClasses.panel}`}
-      >
-        <div className="flex items-center justify-between gap-3">
-          <div>
-            <p className="theme-text-muted text-[10px] font-semibold uppercase tracking-[0.08em] !text-white/40">
-              Automation map
-            </p>
-            <p className="theme-text-primary mt-1 text-sm font-semibold tracking-[-0.01em] !text-white/88">
-              Lead intake to delivery handoff
-            </p>
-          </div>
-          <StatusPill themeClasses={themeClasses}>System healthy</StatusPill>
-        </div>
-
-        <div className="mt-4 grid gap-3 xl:grid-cols-3">
-          {AUTOMATION_STEPS.map((step, index) => (
-            <div
-              key={step.title}
-              className={`relative rounded-[18px] border p-4 ${themeClasses.card}`}
-            >
-              <StatusPill themeClasses={themeClasses}>{`Step ${index + 1}`}</StatusPill>
-              <h3 className="theme-text-primary mt-3 text-base font-semibold tracking-[-0.02em] !text-white/88">
-                {step.title}
-              </h3>
-              <p className="theme-text-secondary mt-2 text-sm leading-6 !text-white/60">
-                {step.meta}
-              </p>
-              <div
-                className={`mt-4 inline-flex rounded-full border px-3 py-1 text-[11px] font-medium ${themeClasses.statusBadge}`}
-              >
-                {step.status}
-              </div>
-              {index < AUTOMATION_STEPS.length - 1 ? (
-                <div
-                  className={`absolute -right-2 top-1/2 hidden h-px w-4 xl:block ${
-                    isLightTheme ? "bg-black/[0.12]" : "bg-white/[0.12]"
-                  }`}
-                />
-              ) : null}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="grid gap-3 xl:grid-cols-[minmax(0,1fr)_220px]">
-        <div
-          className={`rounded-[22px] border p-4 shadow-[0_16px_28px_rgba(0,0,0,0.2)] ${themeClasses.panel}`}
-        >
-          <p className="theme-text-muted text-[10px] font-semibold uppercase tracking-[0.08em] !text-white/40">
-            Safeguards
-          </p>
-          <div className="mt-3 space-y-2.5">
-            {[
-              "Fallback owner is assigned when no routing match is found.",
-              "Slack updates publish only after approval status changes.",
-              "Every automation run writes a clean audit log to the database.",
-            ].map((item) => (
-              <div
-                key={item}
-                className={`theme-text-secondary rounded-[16px] border px-4 py-3 text-sm leading-6 !text-white/60 ${themeClasses.subtle}`}
-              >
-                {item}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div
-          className={`rounded-[22px] border p-4 shadow-[0_16px_28px_rgba(0,0,0,0.2)] ${themeClasses.panel}`}
-        >
-          <p className="theme-text-muted text-[10px] font-semibold uppercase tracking-[0.08em] !text-white/40">
-            Status
-          </p>
-          <div className="mt-3 space-y-2.5">
-            {[
-              ["Queue health", "Stable"],
-              ["Failed runs", "0 today"],
-              ["Avg. latency", "1.8 min"],
-            ].map(([label, value]) => (
-              <div
-                key={label}
-                className={`flex items-center justify-between rounded-[16px] border px-3 py-3 ${themeClasses.subtle}`}
-              >
-                <span className="theme-text-secondary text-sm">{label}</span>
-                <span className="theme-text-primary text-sm font-semibold">{value}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function InsightsPanel({ themeClasses }: { themeClasses: ThemeClasses }) {
-  return (
-    <div className="space-y-3.5">
-      <div className="grid gap-3 md:grid-cols-3">
-        {INSIGHT_METRICS.map((metric) => (
-          <div
-            key={metric.label}
-            className={`rounded-[20px] border px-4 py-4 shadow-[0_16px_28px_rgba(0,0,0,0.18)] ${themeClasses.card}`}
-          >
-            <p className="theme-text-muted text-[10px] font-semibold uppercase tracking-[0.08em] !text-white/40">
-              {metric.label}
-            </p>
-            <p className="theme-text-primary mt-3 text-2xl font-semibold tracking-[-0.05em] !text-white/88">
-              {metric.value}
-            </p>
-          </div>
-        ))}
-      </div>
-
-      <div className="grid gap-3 xl:grid-cols-[minmax(0,1fr)_240px]">
-        <div
-          className={`rounded-[22px] border p-4 shadow-[0_16px_28px_rgba(0,0,0,0.2)] ${themeClasses.panel}`}
-        >
-          <div className="flex items-center justify-between gap-3">
-            <div>
-              <p className="theme-text-muted text-[10px] font-semibold uppercase tracking-[0.08em] !text-white/40">
-                Recommendations
-              </p>
-              <p className="theme-text-primary mt-1 text-sm font-semibold tracking-[-0.01em] !text-white/88">
-                Next moves for the workspace
-              </p>
-            </div>
-            <StatusPill themeClasses={themeClasses}>AI summary</StatusPill>
-          </div>
-
-          <div className="mt-4 space-y-3">
-            {[
-              "Promote the roadmap template to the default intake flow.",
-              "Archive inactive pages after seven days to reduce dashboard noise.",
-              "Add one approval checkpoint before the fulfillment handoff.",
-            ].map((item) => (
-              <div
-                key={item}
-                className={`theme-text-secondary rounded-[16px] border px-4 py-3 text-sm leading-6 !text-white/60 ${themeClasses.subtle}`}
-              >
-                {item}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div
-          className={`rounded-[22px] border p-4 shadow-[0_16px_28px_rgba(0,0,0,0.2)] ${themeClasses.panel}`}
-        >
-          <p className="theme-text-muted text-[10px] font-semibold uppercase tracking-[0.08em] !text-white/40">
-            Highlights
-          </p>
-          <div className="mt-3 space-y-2.5">
-            {[
-              ["Top gain", "Approvals now finish 28% faster."],
-              ["Watch item", "Two pages still use manual owner assignment."],
-              ["Next test", "Measure handoff quality after template rollout."],
-            ].map(([title, copy]) => (
-              <div
-                key={title}
-                className={`rounded-[16px] border px-3 py-3 ${themeClasses.subtle}`}
-              >
-                <p className="theme-text-primary text-sm font-semibold !text-white/88">{title}</p>
-                <p className="theme-text-secondary mt-1 text-sm leading-6 !text-white/60">
-                  {copy}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function DemoContent({
-  view,
-  themeClasses,
-  isLightTheme,
-}: {
-  view: DemoView;
-  themeClasses: ThemeClasses;
-  isLightTheme: boolean;
-}) {
-  if (view === "automation") {
-    return <AutomationPanel themeClasses={themeClasses} isLightTheme={isLightTheme} />;
-  }
-
-  if (view === "insights") {
-    return <InsightsPanel themeClasses={themeClasses} />;
-  }
-
-  return <WorkspacePanel themeClasses={themeClasses} />;
-}
-
 export default function NotionWorkspaceDemo() {
   const shouldReduceMotion = useReducedMotion();
   const reduceMotion = Boolean(shouldReduceMotion);
-  const [activeView, setActiveView] = useState<DemoView>("workspace");
   const [titleIndex, setTitleIndex] = useState(0);
   const [activeMenuItem, setActiveMenuItem] = useState("");
   const [panelTheme, setPanelTheme] = useState<PanelTheme>("dark");
   const [typedTitle, setTypedTitle] = useState("");
   const [isDeletingTitle, setIsDeletingTitle] = useState(false);
+  const [activeFeatureId, setActiveFeatureId] = useState(
+    TEMPLATE_FEATURES[0]?.id ?? "ready-dashboard",
+  );
+
   const isLightTheme = panelTheme === "light";
   const themeClasses: ThemeClasses = {
     window: isLightTheme
@@ -546,25 +343,12 @@ export default function NotionWorkspaceDemo() {
     card: isLightTheme
       ? "border-black/[0.08] bg-white transition-colors duration-200"
       : "border-white/[0.08] bg-[#252525] transition-colors duration-200",
-    panel: isLightTheme
-      ? "border-black/[0.08] bg-[#f7f7f5] transition-colors duration-200"
-      : "border-white/[0.08] bg-[#202020] transition-colors duration-200",
     subtle: isLightTheme
       ? "border-black/[0.08] bg-black/[0.035] transition-colors duration-200"
       : "border-white/[0.08] bg-white/[0.045] transition-colors duration-200",
     tableHeader: isLightTheme
       ? "border-black/[0.08] bg-black/[0.035] text-black/40 transition-colors duration-200"
       : "border-white/[0.08] bg-white/[0.045] text-white/36 transition-colors duration-200",
-    rowBorder: isLightTheme ? "border-black/[0.06]" : "border-white/[0.06]",
-    statusBadge: isLightTheme
-      ? "border-black/[0.08] bg-black/[0.04] text-black/60 transition-colors duration-200"
-      : "border-white/[0.1] bg-white/[0.065] text-white/65 transition-colors duration-200",
-    navActive: isLightTheme
-      ? "border-black/[0.12] bg-black/[0.08] text-black/82 transition-colors duration-200"
-      : "border-white/[0.12] bg-white/[0.09] text-white/82 transition-colors duration-200",
-    navInactive: isLightTheme
-      ? "border-black/[0.08] bg-black/[0.035] text-black/55 hover:bg-black/[0.06] transition-colors duration-200"
-      : "border-white/[0.08] bg-white/[0.045] text-white/55 hover:bg-white/[0.07] transition-colors duration-200",
     sidebarItemActive: isLightTheme
       ? "bg-black/[0.08] !text-black/88 transition-colors duration-200"
       : "bg-white/[0.08] !text-white transition-colors duration-200",
@@ -573,10 +357,24 @@ export default function NotionWorkspaceDemo() {
       : "text-white/55 hover:bg-white/[0.055] hover:text-white/78 transition-colors duration-200",
     separator: isLightTheme ? "border-black/[0.08]" : "border-white/[0.08]",
     cursor: isLightTheme ? "bg-black/55" : "bg-white/70",
+    featureActive: isLightTheme
+      ? "border-black/[0.12] bg-black/[0.055] text-black/82 transition-colors duration-200"
+      : "border-white/[0.12] bg-white/[0.075] text-white/86 transition-colors duration-200",
+    featureInactive: isLightTheme
+      ? "border-black/[0.06] bg-white text-black/70 hover:bg-black/[0.035] transition-colors duration-200"
+      : "border-white/[0.08] bg-[#252525] text-white/70 hover:bg-white/[0.06] transition-colors duration-200",
+    featureTag: isLightTheme
+      ? "bg-black/[0.06] text-black/58 transition-colors duration-200"
+      : "bg-white/[0.07] text-white/58 transition-colors duration-200",
+    featureCheck: isLightTheme
+      ? "bg-emerald-500/[0.14] text-emerald-700"
+      : "bg-emerald-400/[0.14] text-emerald-300",
   };
+
   const transition = useMemo(() => getTransition(reduceMotion), [reduceMotion]);
-  const activeMeta = useMemo(() => getViewMeta(activeView), [activeView]);
   const activeSystem = OS_SYSTEMS[titleIndex] ?? OS_SYSTEMS[0];
+  const activeFeature =
+    TEMPLATE_FEATURES.find((feature) => feature.id === activeFeatureId) ?? TEMPLATE_FEATURES[0];
   const activeTitlePrefix = activeSystem.title;
   const activeMenuKeyPrefix = `${activeSystem.title}::`;
   const activeMenuLabel = activeMenuItem.startsWith(activeMenuKeyPrefix)
@@ -758,9 +556,7 @@ export default function NotionWorkspaceDemo() {
                       >
                         {item.emoji}
                       </span>
-                      <span className="min-w-0 truncate">
-                        {item.label}
-                      </span>
+                      <span className="min-w-0 truncate">{item.label}</span>
                     </button>
                   );
                 })}
@@ -774,95 +570,160 @@ export default function NotionWorkspaceDemo() {
             </aside>
 
             <div
-              className={`flex min-h-0 flex-col rounded-[20px] border p-3 sm:p-4 ${themeClasses.content}`}
+              className={`flex min-h-0 flex-col rounded-[20px] border p-3 text-white/72 sm:p-4 ${themeClasses.content}`}
             >
-              <div className={`flex flex-wrap items-center justify-between gap-3 border-b pb-3 ${themeClasses.separator}`}>
-                <div>
-                  <p className="theme-text-muted text-[10px] font-semibold uppercase tracking-[0.08em] !text-white/40">
-                    A workspace built around your team
-                  </p>
-                  <p className="theme-text-primary mt-1 text-lg font-semibold tracking-[-0.04em] !text-white/88">
-                    {activeMeta.title}
-                  </p>
-                  <p className="theme-text-secondary mt-1 text-sm !text-white/62">
-                    {activeMeta.detail}
-                  </p>
+              <div className={`border-b pb-3 ${themeClasses.separator}`}>
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <p className="theme-text-muted text-[10px] font-semibold uppercase tracking-[0.08em] !text-white/40">
+                      Template benefits
+                    </p>
+                    <p className="theme-text-primary mt-1 text-lg font-semibold tracking-[-0.04em] !text-white/88">
+                      Build a system that feels ready on day one.
+                    </p>
+                    <p className="theme-text-secondary mt-2 text-sm leading-6 !text-white/62">
+                      Explore how Noricraft templates turn Notion into a practical operating
+                      system.
+                    </p>
+                  </div>
+                  <StatusPill themeClasses={themeClasses}>Curated setup</StatusPill>
+                </div>
+              </div>
+
+              <div className="mt-3 min-h-0 flex-1 overflow-auto pr-1">
+                <div
+                  className={`grid grid-cols-[minmax(0,1fr)_64px] border-b px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.08em] sm:grid-cols-[minmax(0,1.45fr)_72px_78px] ${themeClasses.tableHeader}`}
+                >
+                  <span className="theme-text-muted">Page</span>
+                  <span className="theme-text-muted">Type</span>
+                  <span className="theme-text-muted hidden sm:block">State</span>
                 </div>
 
-                <div className="flex flex-wrap items-center gap-2">
-                  <StatusPill themeClasses={themeClasses}>{activeMeta.pill}</StatusPill>
-                  {NAV_ITEMS.map((item) => {
-                    const isActive = activeView === item.id;
+                <div className="space-y-1.5 pt-2">
+                  {TEMPLATE_FEATURES.map((feature) => {
+                    const isActive = activeFeature.id === feature.id;
 
                     return (
                       <button
-                        key={item.id}
+                        key={feature.id}
                         type="button"
-                        aria-label={`Switch to ${item.label}`}
                         aria-pressed={isActive}
-                        onClick={() => setActiveView(item.id)}
-                        className={`rounded-full border px-3 py-1.5 text-xs font-medium transition ${
-                          isActive ? themeClasses.navActive : themeClasses.navInactive
+                        onClick={() => setActiveFeatureId(feature.id)}
+                        className={`grid w-full cursor-pointer grid-cols-[minmax(0,1fr)_64px] items-center rounded-[12px] border px-3 py-2.5 text-left text-sm transition-colors sm:grid-cols-[minmax(0,1.45fr)_72px_78px] ${
+                          isActive ? themeClasses.featureActive : themeClasses.featureInactive
                         }`}
                       >
-                        {item.label}
+                        <span className="flex min-w-0 items-center gap-2.5">
+                          <span
+                            className="grid h-5 w-5 shrink-0 place-items-center text-[13px] leading-none"
+                            style={{
+                              fontFamily:
+                                '"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif',
+                            }}
+                          >
+                            {feature.icon}
+                          </span>
+                          <span className="min-w-0">
+                            <span className="theme-text-primary block truncate text-sm font-semibold !text-white/88">
+                              {feature.title}
+                            </span>
+                            <span className="theme-text-secondary mt-0.5 block truncate text-xs !text-white/58">
+                              {feature.summary}
+                            </span>
+                          </span>
+                        </span>
+
+                        <span
+                          className={`w-fit rounded-full px-2 py-1 text-[10px] font-medium ${themeClasses.featureTag}`}
+                        >
+                          {feature.type}
+                        </span>
+
+                        <span
+                          className={`hidden w-fit rounded-full px-2 py-1 text-[10px] font-medium sm:inline-flex ${themeClasses.featureTag}`}
+                        >
+                          {feature.status}
+                        </span>
                       </button>
                     );
                   })}
                 </div>
               </div>
-
-              <div className="mt-3 flex-1 overflow-hidden">
-                <AnimatePresence mode="wait" initial={false}>
-                  <motion.div
-                    key={activeView}
-                    initial={reduceMotion ? false : { opacity: 0, x: 14, y: 10 }}
-                    animate={{ opacity: 1, x: 0, y: 0 }}
-                    exit={reduceMotion ? { opacity: 1 } : { opacity: 0, x: -12, y: -8 }}
-                    transition={transition}
-                    className="h-full overflow-auto pr-1"
-                  >
-                    <DemoContent
-                      view={activeView}
-                      themeClasses={themeClasses}
-                      isLightTheme={isLightTheme}
-                    />
-                  </motion.div>
-                </AnimatePresence>
-              </div>
             </div>
 
             <aside
-              className={`hidden min-h-0 flex-col rounded-[20px] border p-3 lg:flex ${themeClasses.assistant}`}
+              className={`hidden min-h-0 flex-col rounded-[20px] border p-3 text-white/72 lg:flex ${themeClasses.assistant}`}
             >
               <p className="theme-text-muted text-[10px] font-semibold uppercase tracking-[0.18em] !text-white/40">
-                Assistant
+                Selected page
               </p>
-              <div className="mt-3 space-y-2.5">
-                {[
-                  "Suggesting a simpler intake view for new client requests.",
-                  "Detected repeated handoff steps that can become one automation.",
-                  "Highlighting pages with the highest approval lag.",
-                ].map((item, index) => (
-                  <motion.div
-                    key={item}
-                    initial={reduceMotion ? false : { opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={reduceMotion ? { duration: 0 } : { ...transition, delay: index * 0.05 }}
-                    className={`theme-text-secondary rounded-[16px] border px-3 py-3 text-sm leading-6 !text-white/70 shadow-[0_10px_20px_rgba(0,0,0,0.16)] ${themeClasses.subtle}`}
-                  >
-                    {item}
-                  </motion.div>
-                ))}
-              </div>
 
-              <div className={`mt-auto rounded-[16px] border p-3 ${themeClasses.subtle}`}>
-                <p className="theme-text-muted text-[10px] font-semibold uppercase tracking-[0.18em] !text-white/40">
-                  Quick note
-                </p>
-                <p className="theme-text-secondary mt-2 text-sm leading-6 !text-white/58">
-                  Navigation swaps the active workspace state without changing the hero layout.
-                </p>
+              <div className="mt-3 min-h-0 flex-1 overflow-auto pr-1">
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.div
+                    key={activeFeature.id}
+                    initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={reduceMotion ? { opacity: 1 } : { opacity: 0, y: -8 }}
+                    transition={transition}
+                    className="space-y-3"
+                  >
+                    <div className={`rounded-[16px] border p-3 ${themeClasses.card}`}>
+                      <div className="flex items-start gap-3">
+                        <span
+                          className="grid h-8 w-8 shrink-0 place-items-center rounded-lg text-lg"
+                          style={{
+                            fontFamily:
+                              '"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif',
+                          }}
+                        >
+                          {activeFeature.icon}
+                        </span>
+
+                        <div className="min-w-0">
+                          <p className="theme-text-primary text-base font-semibold leading-6 !text-white/88">
+                            {activeFeature.detailTitle}
+                          </p>
+                          <p className="theme-text-secondary mt-2 text-sm leading-6 !text-white/60">
+                            {activeFeature.detail}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="mt-4 flex flex-wrap gap-1.5">
+                        {activeFeature.bestFor.map((tag) => (
+                          <span
+                            key={tag}
+                            className={`rounded-full px-2 py-1 text-[10px] font-medium ${themeClasses.featureTag}`}
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className={`rounded-[16px] border p-3 ${themeClasses.subtle}`}>
+                      <p className="theme-text-muted text-[10px] font-semibold uppercase tracking-[0.12em] !text-white/40">
+                        Included
+                      </p>
+
+                      <div className="mt-3 space-y-2.5">
+                        {activeFeature.included.map((item) => (
+                          <div key={item} className="flex items-start gap-2">
+                            <span
+                              className={`mt-0.5 grid h-4 w-4 shrink-0 place-items-center rounded text-[10px] ${themeClasses.featureCheck}`}
+                            >
+                              ✓
+                            </span>
+                            <p className="theme-text-secondary text-sm leading-5 !text-white/60">
+                              {item}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
               </div>
             </aside>
           </div>
